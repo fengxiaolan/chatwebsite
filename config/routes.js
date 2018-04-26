@@ -158,6 +158,28 @@ module.exports =  (app) => {
     })
   }),
 
+  //查询用户
+  app.get('/userinfo', function (req, res) {
+      var _user = req.body
+      var name = _user.name
+      User.find({name: name}, function (err, user) {
+          if (err) {
+              console.log(err);
+          }
+          if (!user) {
+              res.json({
+                  errno: 1,
+                  data: '用户不存在'
+              })
+          } else {
+              res.json({
+                  errno: 0,
+                  data: user
+              })
+          }
+      })
+  }),
+
   // 信息
   app.get('/message', (req, res) => {
     const id = req.query.roomid

@@ -31,9 +31,9 @@
     },
     methods: {
       sendmessage() {
-        if (!getItem('userid')) {
-          this.$router.push({path: '/login'})
-        }
+        // if (!getItem('userid')) {
+        //   this.$router.push({path: '/login'})
+        // }
         this.username = getItem('userid')
         this.src = getItem('src')
         const info = document.getElementById('msg').value
@@ -48,7 +48,8 @@
         })
         this.$store.dispatch('getRobatMess', data)
         document.getElementById('msg').value = ''
-        window.scrollTo(0, 900000)
+        window.scrollTo(0, 990000)
+        // scrollTop($chatList[0].scrollHeight);
       }
     },
     computed: {
@@ -79,12 +80,13 @@
         height: 42px
         box-sizing: border-box
         border: 1px solid #ddd
-        color: #333333
+        color: #333
         font-size: 18px
         padding-left: 5px
       .mu-text-field
         width: 100%
     .demo-raised-button
       height: 50px
-      background: #ddd
+      background: #2b85e4
+      color: #fff
 </style>

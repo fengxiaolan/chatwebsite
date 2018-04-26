@@ -78,16 +78,18 @@
       //   const svg = SvgModal()
       //   this.$store.commit('setSvgModal', svg)
       // }
-//      Loading.show()
+      //Loading.show()
     },
     created() {
-        localStorage.addr = '定位未知';
-        axios.get('https://zhaoplus.com/api/ip')
-            .then(result => {
-                if (result.data.content.address) {
-                    localStorage.addr = result.data.content.address;
-                }
-            })
+        // axios.get('https://zhaoplus.com/api/ip')
+        //     .then(result => {
+        //         if (result.data.content.address) {
+        //             //localStorage.addr = result.data.content.address;
+        //             setItem('addr', result.data.content.address)
+        //         }else{
+        //             setItem('addr', '未知区域')
+        //         }
+        //     })
     },
     computed: {
       // getSvgModal() {
@@ -119,14 +121,15 @@
       color: #ed3f14
       font-size: 20px
     .content
-      width: 400px
-      height: 280px
+      width: 360px
+      height: 340px
       position: absolute
       top: 0
       left: 0
       right: 0
       bottom: 0
       margin: auto
+      background: rgba(0,0,0,0.3)
       .mu-text-field
         width: 100%
       .mu-raised-button

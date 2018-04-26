@@ -12,13 +12,13 @@
       </div>
       <div class="chat-inner">
         <div class="all-chat">
-          <div>在线人员</div>
+          <!--<div>在线人员</div>-->
           <div v-for="obj in getUsers" class="online">
             <img :src="obj.src" alt="">
           </div>
         </div>
         <div class="chat" v-if="isLoadingAchieve">
-          <div v-if="getInfos.length === 0 && getMessHistoryInfos.length === 0" class="chat-no-people">暂无消息,赶紧来占个沙发～</div>
+          <div v-if="getInfos.length === 0 && getMessHistoryInfos.length === 0" class="chat-no-people">暂无消息,赶紧来抢占沙发～～～</div>
           <div v-for="obj in getMessHistoryInfos">
             <othermsg v-if="obj.username!=useranme" :name="obj.username" :head="obj.src" :msg="obj.msg"
                       :img="obj.img" :mytime="obj.time"></othermsg>
@@ -89,10 +89,10 @@
       if (!roomId) {
         this.$router.push({path: '/'})
       }
-      if (!getItem('userid')) {
-        // 防止未登录
-        this.$router.push({path: '/login'})
-      }
+      // if (!getItem('userid')) {
+      //   // 防止未登录
+      //   this.$router.push({path: '/login'})
+      // }
       this.useranme = getItem('userid')
     },
     mounted() {
@@ -309,8 +309,8 @@
           flex-basis: 88px
           margin-top: 4px
           height: 40px
-          background: #eeeff3
-          color: #8c8c96
+          background: #2b85e4
+          color: #fff
       .functions
         width: 100%
         .fun-li

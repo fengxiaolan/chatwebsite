@@ -121,14 +121,15 @@
       color: #ed3f14
       font-size: 20px
     .content
-      width: 400px
-      height: 280px
+      width: 360px
+      height: 320px
       position: absolute
       left: 0
       top: 0
       right: 0
       bottom: 0
       margin: auto
+      background: rgba(0,0,0,0.3)
       .mu-text-field
         width: 100%
 </style>

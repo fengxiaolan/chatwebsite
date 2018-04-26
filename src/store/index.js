@@ -112,32 +112,81 @@ const store = new Vuex.Store({
       }
     },
     async getAllMessHistory({commit}, data) {
-      const res = await url.RoomHistoryAll(data)
-      if (res.data.data.errno === 0) {
+    const res = await url.RoomHistoryAll(data)
+    if (res.data.data.errno === 0) {
         return {
-          data: res.data.data.data,
-          total: res.data.data.total
+            data: res.data.data.data,
+            total: res.data.data.total
         }
         // commit('setAllMessHistory', res.data.data.data)
       }
-    },
-    async getRobatMess({commit}, data) {
+   },
+  async getRobatMess({commit}, data) {
       let robotdata = ''
       const res = await url.getRobotMessage(data)
       if (res) {
-        robotdata = JSON.parse(res.data.data)
-        // 分类信息
-        if (robotdata.code === 100000) {
-          commit('setRobotMsg', {message: robotdata.text, user: 'robot'})
-        } else if (robotdata.code === 200000) {
-          let data = robotdata.text + robotdata.url
-          commit('setRobotMsg', {message: data, user: 'robot'})
-        } else if (robotdata.code === 302000) {
-          commit('setRobotMsg', {message: '暂不支持此类对话', user: 'robot'})
-        } else {
-          commit('setRobotMsg', {message: '暂不支持此类对话', user: 'robot'})
-        }
+          robotdata = JSON.parse(res.data.data)
+          // 分类信息
+          if (robotdata.code === 100000) {
+              commit('setRobotMsg', {message: robotdata.text, user: 'robot'})
+          } else if (robotdata.code === 200000) {
+              let data = robotdata.text + robotdata.url
+              commit('setRobotMsg', {message: data, user: 'robot'})
+          } else if (robotdata.code === 302000) {
+              commit('setRobotMsg', {message: '暂不支持此类对话', user: 'robot'})
+          } else {
+              commit('setRobotMsg', {message: '暂不支持此类对话', user: 'robot'})
+          }
       }
+   },
+    async searchUserinfo({commit}, data) {
+        const res = await url.searchUser(data)
+        if (res.data.errno === 0) {
+            return {
+                status: 'success',
+                data: res.data
+            }
+        }
+        return {
+            status: 'fail',
+            data: res.data
+        }
+    },
+    async deleteUser({commit}, data) {
+        const res = await url.deleteUser(data)
+        if (res.data.errno === 0) {
+            return {
+                status: 'success',
+                data: res.data
+            }
+        }
+        return {
+            status: 'fail',
+            data: res.data
+        }
+    },
+    async addFriend({commit}, data) {
+        const res = await url.addFriend(data)
+        if (res.data.errno === 0) {
+            return {
+                status: 'success',
+                data: res.data
+            }
+        }
+        return {
+            status: 'fail',
+            data: res.data
+        }
+    },
+    async sgoodFriend({commit}, data) {
+        const res = await url.goodFriend(data)
+        if (res.data.data.errno === 0) {
+            return {
+                data: res.data.data.data,
+                total: res.data.data.total
+            }
+            // commit('setAllMessHistory', res.data.data.data)
+        }
     }
   }
 })

@@ -4,10 +4,9 @@
     <!--<div class="app-bottom" v-if="istab">-->
       <div class="heads">
         <!--<a href="javascript:void();" @click="userinfo">用户信息</a>-->
-        <h2 style="font-size: 14px; line-height: 36px; float: left; color: blue; text-shadow: yellow; ">在这里遇见你</h2>
-        <mu-flat-button label="退出" class="flat-button" to="/login"/>
-        <mu-flat-button label="我的" class="flat-button" icon="android" primary to="/home"/>
-
+        <h2 class="logotext">刚好遇见你</h2>
+        <mu-flat-button label="退出" class="flat-button" icon="home"  @click="logout" color="grey"/>
+        <mu-flat-button label="我的" class="flat-button" icon="person" color="orange" to="/home" />
       </div>
       <!--<mu-paper>-->
         <!--<mu-bottom-nav :value="bottomNav" @change="handleChange">-->
@@ -17,11 +16,12 @@
         <!--</mu-bottom-nav>-->
       <!--</mu-paper>-->
       <ul class="nav">
+        <li>&nbsp;</li>
         <li><router-link to="/">首页</router-link></li>
         <li><router-link to="/activity">门店活动</router-link></li>
         <li><router-link to="/search">搜索</router-link></li>
         <li><router-link to="/loan">同城聊</router-link></li>
-        <li><router-link to="/robot">无聊</router-link></li>
+        <li><router-link to="/robot">智能对话</router-link></li>
       </ul>
 
       <router-view></router-view>
@@ -31,6 +31,7 @@
 
 <script>
   import {mapState} from 'vuex'
+  import {clear, getItem} from './utils/localStorage'
   export default {
     data () {
       return {
@@ -43,6 +44,11 @@
       },
       userinfo () {
           this.$router.push({path: '/home'})
+      },
+      logout () {
+          clear()
+          this.$router.push('/login')
+          this.$store.commit('setTab', false)
       }
     },
     computed: {
@@ -67,24 +73,37 @@
       /*width: 100%*/
       /*.mu-bottom-nav*/
         /*height: 20px*/
+
+  .logotext {
+    font-size: 16px;
+    line-height: 36px;
+    float: left;
+    color: red;
+    text-shadow: 1px 2px #ec7f7f;
+    margin-left: 10px;
+  }
+
    #app{
      width:100%;
      height: 100%;
    }
   .heads{
     height: 36px;
-    background: #ed3f14;
+    background: peachpuff;
+  }
+  .mu-flat-button {
+    color: #ed3f14;
   }
   .flat-button{
-    float:right;
+    float: right;
   }
   .nav{
     width: 100%;
     height: 30px;
-    background: peachpuff;
+    background: red;
   }
   .nav li{
-    padding: 0 5px;
+    padding: 0 2px;
     float: left;
     height: 30px;
     list-style:none;
@@ -92,6 +111,7 @@
   .nav li a{
     color:white;
     line-height: 30px;
+    padding: 0 10px;
   }
   .router-link-exact-active{
     height:30px;

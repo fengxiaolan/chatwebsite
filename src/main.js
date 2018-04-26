@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -8,8 +7,9 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import './styles/main.styl'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VDistpicker from 'v-distpicker'
+Vue.use(VDistpicker)
 Vue.use(VueAwesomeSwiper)
-
 Vue.use(MuseUI)
 Vue.config.productionTip = false
 

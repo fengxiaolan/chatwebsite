@@ -12,24 +12,34 @@
       </div>
     </div>
     <div class="content">
+      <mu-grid-list class="gridlist-inline-demo">
+        <mu-grid-tile v-for="(val, index) in list" :key="index">
+          <img :src="val.img"/>
+        </mu-grid-tile>
+      </mu-grid-list>
       <mu-list>
-        <mu-list-item title="个人中心">
+        <mu-list-item title="上传图片" @click="imgupload">
           <mu-icon slot="left" value="inbox"/>
+          <input id="inputFile" name='inputFile' type='file' multiple='mutiple' accept="image/*;capture=camera"
+                 style="display: none" @change="fileup">
         </mu-list-item>
         <mu-list-item title="我的好友">
           <mu-icon slot="left" value="grade"/>
         </mu-list-item>
-        <mu-list-item title="我的动态">
-          <mu-icon slot="left" value="send"/>
+        <!--<mu-list-item title="我的动态">-->
+          <!--<mu-icon slot="left" value="send"/>-->
+        <!--</mu-list-item>-->
+        <!--<mu-list-item title="设置">-->
+          <!--<mu-icon slot="left" value="drafts"/>-->
+        <!--</mu-list-item>-->
+        <mu-list-item title="退出" @click="logout">
+          <mu-icon slot="left" value="drafts"/>
         </mu-list-item>
-        <mu-list-item title="设置">
+        <mu-list-item title="注销" @click="deleteuser">
           <mu-icon slot="left" value="drafts"/>
         </mu-list-item>
       </mu-list>
       <!--<mu-divider/>-->
-    </div>
-    <div class="logout">
-      <mu-raised-button @click="logout" label="退出" class="demo-raised-button" fullWidth/>
     </div>
     <div style="height:80px"></div>
   </div>
@@ -37,11 +47,14 @@
 
 <script>
   import {clear, getItem} from '../utils/localStorage'
+  import axios from 'axios'
+
   export default{
     data() {
       return {
         username: '',
-        src: ''
+        src: '',
+        list: []
       }
     },
     mounted() {
@@ -51,11 +64,51 @@
       this.username = getItem('userid')
       this.src = getItem('src')
     },
+    created() {
+      //查看好友
+        const res = this.$store.dispatch('sgoodFriend');
+        console.log(res);
+    },
     methods: {
       logout() {
         clear()
         this.$router.push('/login')
         this.$store.commit('setTab', false)
+      },
+      deleteuser() {
+        var name = getItem('userid')
+        const data = {
+            name: name
+        }
+        const res = this.$store.dispatch('deleteUser', data)
+          if (res.status === 'success') {
+              console.log(res)
+          } else {
+              console.error("没有找到");
+          }
+      },
+      fileup() {
+          const that = this
+          const file1 = document.getElementById('inputFile').files[0]
+          if (file1) {
+              const formdata = new window.FormData()
+              this.$store.dispatch('uploadImg', formdata)
+              const fr = new window.FileReader()
+              fr.onload = function () {
+                  const obj = {
+                      img: fr.result,
+                      time: new Date()
+                  }
+                  this.list.push(obj)
+              }
+              fr.readAsDataURL(file1)
+          } else {
+              console.log('必须有文件')
+          }
+      },
+      imgupload() {
+          const file = document.getElementById('inputFile')
+          file.click()
       }
     }
   }

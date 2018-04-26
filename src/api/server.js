@@ -18,7 +18,20 @@ const Service = {
   // 上传图片
   postUploadFile: data => Axios.post('/file/uploadimg', data, {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+  }),
+  //搜索
+  searchUser: data => Axios.get('/userinfo', {
+    params: data
+  }),
+  //注销账户
+  deleteUser: data => Axios.post('/deleteuser'),
+  //添加好友
+  addFriend: data => Axios.post('/addfriend', data),
+  //查看好友
+  goodFriend:  data => Axios.get('/goodfriend', {
+      params: data
   })
+
 }
 
 export default Service

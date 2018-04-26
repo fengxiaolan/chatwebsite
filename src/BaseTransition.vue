@@ -1,8 +1,8 @@
 <template>
   <div class="webview">
-    <transition :name="transitionName">
+    <!--<transition :name="transitionName">-->
       <router-view class="child-view"></router-view>
-    </transition>
+    <!--</transition>-->
   </div>
 </template>
 
@@ -32,7 +32,7 @@
     height: 100%;
     background: #fff;
     overflow: hidden;
-    box-shadow: 0 0 15px 0px #d0cece;
+    /*box-shadow: 0 0 15px 0px #d0cece;*/
   }
   .child-view {
     position: absolute;

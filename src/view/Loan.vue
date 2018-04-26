@@ -54,15 +54,16 @@
     },
     async mounted() {
       const uerId = getItem('userid')
-      if (!uerId) {
-        await Confirm({
-          title: '提示',
-          content: '请先登录'
-        })
-        this.$router.push({ path: 'login' })
-      } else {
+      // if (!uerId) {
+      //   await Confirm({
+      //     title: '提示',
+      //     content: '请先登录'
+      //   })
+      //   this.$router.push({ path: 'login' })
+      // } else {
+      //   this.$store.commit('setTab', true)
+      // }
         this.$store.commit('setTab', true)
-      }
     },
     computed: {
       ...mapGetters([

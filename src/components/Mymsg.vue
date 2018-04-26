@@ -1,8 +1,7 @@
 <template>
     <div class="item">
         <div class="name">
-            <span v-if="mytime">{{getdate}}</span> &nbsp;<br>
-            {{localStorage.addr}} {{name}}
+            <span v-if="mytime">{{getdate}}</span>&nbsp;{{location}}&nbsp;{{name}}
         </div>
         <img :src="head" alt="" class="head">
         <div v-if="img">
@@ -16,12 +15,22 @@
 
 <script type="text/ecmascript-6">
     import dateFormat from '../utils/date'
+    import { getItem } from '../utils/localStorage.js'
     export default{
+        data() {
+            return {
+                location: '未知定位'
+            }
+        },
         props: ['name', 'img', 'msg', 'head', 'mytime'],
         computed: {
             getdate() {
                 return dateFormat(new Date(this.mytime), 'yyyy-MM-dd HH:mm:ss')
             }
+        },
+        mounted() {
+            const addr = getItem('addr');
+            this.location = addr
         }
 
     }

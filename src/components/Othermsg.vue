@@ -2,13 +2,13 @@
     <div class="clear">
         <div class="item">
             <div class="name">
-                <span v-if="mytime">{{getdate}}</span> &nbsp;&nbsp;{{name}}
+                <span v-if="mytime" style="color: dodgerblue;">{{getdate}}</span>&nbsp;&nbsp{{name}}
             </div>
             <img :src="head" alt="" class="head">
             <div v-if="img">
                 <img :src="img" alt="" class="img">
             </div>
-            <span v-if="msg">
+            <span v-if="msg" style="color: dodgerblue;">
                 {{msg}}
             </span>
         </div>
@@ -17,6 +17,7 @@
 
 <script type="text/ecmascript-6">
     import dateFormat from '../utils/date'
+    import { getItem } from '../utils/localStorage.js'
     export default{
         props: ['name', 'img', 'msg', 'head', 'mytime'],
         computed: {

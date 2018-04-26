@@ -1,4 +1,5 @@
 var User = require('../models/user')
+var Friend = require('../models/friend')
 var Message = require('../models/message')
 var superagent = require('superagent')
 var fs = require('fs')
@@ -152,7 +153,83 @@ module.exports = function (app) {
     }),
 
     //注销当前用户
+    app.post('/deleteuser', function (req, res) {
+        var _user = req.body
+        var name = _user.name
+        User.remove({name: name}, function (err) {
+            if (err) {
+                console.error(error);
+            } else {
+                console.info("用户删除成功")
+            }
+        })
+    }),
 
+    //查询用户
+    app.get('/userinfo', function (req, res) {
+        var _user = req.body
+        var name = _user.name
+        User.find({name: name}, function (err, user) {
+            if (err) {
+                console.log(err);
+                console.log(user);
+            }
+            if (!user) {
+                res.json({
+                    errno: 1,
+                    data: '用户不存在'
+                })
+            } else {
+              res.json({
+                  errno: 0,
+                  data: user
+              })
+            }
+        })
+    }),
+
+    //添加好友
+    app.post('/addfriend', function (req, res) {
+        var _user = req.body
+        console.log(_user)
+        Friend.findOne({name: _user.name}, function (err, user) {
+            if (err) {
+                console.log(err)
+            }
+            if (user) {
+                res.json({
+                    errno: 1,
+                    data: '已是好友'
+                })
+            } else {
+                var user = new Friend(_user)
+                Friend.save(function (err, user) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    res.json({
+                        errno: 0,
+                        data: '添加好友成功'
+                    })
+                })
+            }
+        })
+    }),
+
+    //查看好友6+
+      app.get('/sgoodfriend', function (req, res) {
+          Friend.find({},function (err, data) {
+              if (err) {
+                  console.log(err);
+                  console.log(data);
+              } else {
+                  res.json({
+                      errno: 0,
+                      data: data
+                  })
+              }
+          })
+      }),
 
     // 信息
     app.get('/message', function (req, res) {
@@ -168,6 +245,7 @@ module.exports = function (app) {
         }
       })
     }),
+
     // 获取历史记录
     app.get('/history/message', function (req, res) {
       var id = req.query.roomid
