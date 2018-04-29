@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
 var FriendSchema = require('../schemas/friend')
-var Friend = mongoose.model('friends',FriendSchema)
+var Friend = mongoose.model('Friends',FriendSchema)
 
 module.exports = Friend

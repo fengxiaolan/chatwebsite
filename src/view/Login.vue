@@ -47,8 +47,8 @@
           }
           // this.loading = 'loading'
           const res = await this.$store.dispatch('loginSubmit', data)
-          // if (res.status === 'success') {
-          if(this.remmber){
+          // if (this.remmber) {
+          if(res.status === 'success'){
             setItem('userid', res.data.name)
             setItem('src', res.data.src)
             await Alert({
@@ -120,6 +120,7 @@
       text-align: center
       color: #ed3f14
       font-size: 20px
+      font-weight: 700
     .content
       width: 360px
       height: 340px

@@ -20,6 +20,8 @@ var UserSchema = new mongoose.Schema({
       default: Date.now()
     }
   }
+}, {
+    versionKey: false
 });
 //对密码进行加密
 UserSchema.pre('save', function (next) {

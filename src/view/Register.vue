@@ -29,7 +29,7 @@
         if (name === 'xiaolan') {
           src = './static/img/xiaolan.jpg'
         }
-        src = './static/img/' + Math.ceil(Math.random() * 10) + '.jpg'
+        src = './static/img/' + Math.ceil(Math.random() * 40) + '.jpg'
         if (name !== '' && password !== '') {
           const data = {
             name: name,
@@ -120,6 +120,7 @@
       text-align: center
       color: #ed3f14
       font-size: 20px
+      font-weight: 700
     .content
       width: 360px
       height: 320px

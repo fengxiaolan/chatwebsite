@@ -83,17 +83,15 @@
                               icon="search"
                               :underlineShow="false"
                               v-model="searchValue"
+                              @change="handleChange"
             />
             <mu-list>
-                <mu-list-item title="图片" v-for="(name, index) in searchsource" :key="index" @click="chatwindow(name)">
-                    <mu-avatar color="white" backgroundColor="lightgreen" :size="32">搜</mu-avatar>{{name}}
-                    <mu-icon slot="right" value="info" @click="addfriend(name)"/>
-                </mu-list-item>
-                <mu-list-item title="图片" v-if="searchsource.length <= 0">
-                    <mu-icon slot="left" value="可以搜索好友"/>
+                <mu-list-item title="搜" v-for="(val, index) in searchsource" :key="index" >
+                    <mu-avatar color="white" :src="val.src" backgroundColor="lightgreen" :size="32" @click="addfriend(val.name)"></mu-avatar>{{val.name}}
+                    <mu-icon slot="right" value="info"/>
                 </mu-list-item>
             </mu-list>
-
+            <mu-raised-button label="添加" @click="addfriend('fxlan')"/>
         </div>
         <!--推荐-->
         <div class="recomd">
@@ -129,39 +127,51 @@
                 other: ['1'],
                 dataSource: [],
                 searchValue:'',
-                searchsource: '',
+                searchsource: [],
                 list: [{
-                    image: './static/img/1.jpg',
+                    image: './static/img/a28.jpg',
                     title: 'Breakfast',
                     author: 'Myron',
                     featured: true
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a27.jpg',
                     title: 'Burger',
                     author: 'Linyu'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a26.jpg',
                     title: 'Camera',
                     author: 'ruolin'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a25.jpg',
                     title: 'Hats',
                     author: 'kakali'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a24.jpg',
                     title: 'Honey',
                     author: 'yuyang'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a23.jpg',
                     title: 'Morning',
                     author: 'mokayi',
                     featured: true
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a22.jpg',
                     title: 'Vegetables',
                     author: 'NUyyyyyyy'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a21.jpg',
+                    title: 'Vegetables',
+                    author: 'NUyyyyyyy'
+                }, {
+                    image: './static/img/a20.jpg',
+                    title: 'Vegetables',
+                    author: 'NUyyyyyyy'
+                }, {
+                    image: './static/img/a19.jpg',
+                    title: 'Vegetables',
+                    author: 'NUyyyyyyy'
+                }, {
+                    image: './static/img/a18.jpg',
                     title: 'water',
                     author: 'TDDyyyyyyy'
                 }]
@@ -172,17 +182,16 @@
                 this.value = value
             },
             async handleInput (val) {
-                this.dataSource = [
-                    val
-                ];
+                this.dataSource = [val];
+            },
+            async handleChange () {
                 const name = this.searchValue;
                 const data = {
                     name: name
                 };
                 const res = await this.$store.dispatch('searchUserinfo', data)
                 if (res.status === 'success') {
-                    this.searchsource = res;
-                    console.log(res)
+                    this.searchsource = res
                 } else {
                     console.error("没有找到");
                 }
@@ -194,21 +203,22 @@
                 this.$store.commit('setTab', false)
                 this.$router.push({path: '/chat', query: {roomId: roomID}})
             },
-            async addfriend(user) {
+            async addfriend (user) {
                 const data = {
                     name: user
-                }
-                const res = await this.$store.dispatch('addFriend', data);
+                };
+                const res = await this.$store.dispatch('addFriends', data);
                 if (res.status === 'success') {
-                     Alert({
+                    await Alert({
                         content: '添加成功'
                     })
                 } else {
-                     Alert({
+                    await  Alert({
                         content: '已是好友'
                     })
                 }
             }
+
         }
     }
 </script>

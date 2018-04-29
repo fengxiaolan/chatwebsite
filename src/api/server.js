@@ -20,17 +20,17 @@ const Service = {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   }),
   //搜索
-  searchUser: data => Axios.get('/userinfo', {
-    params: data
-  }),
+  searchUser: data => Axios.post('/userinfo', data),
   //注销账户
-  deleteUser: data => Axios.post('/deleteuser'),
+  deleteUser: data => Axios.post('/deleteuser', data),
   //添加好友
   addFriend: data => Axios.post('/addfriend', data),
   //查看好友
   goodFriend:  data => Axios.get('/goodfriend', {
       params: data
-  })
+  }),
+  //修改用户名
+  reName: data => Axios.post('/rename', data)
 
 }
 

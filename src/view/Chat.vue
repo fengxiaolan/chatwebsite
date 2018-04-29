@@ -7,7 +7,7 @@
           <div class="center">
             聊天({{Object.keys(getUsers).length}})
           </div>
-          <mu-icon-button icon="expand_more" slot="right" @click="setLog"/>
+          <!--<mu-icon-button icon="expand_more" slot="right" @click="setLog"/>-->
         </mu-appbar>
       </div>
       <div class="chat-inner">
@@ -323,7 +323,7 @@
           background-size: 25px 25px
           background-position: center center
         .fun-li:nth-child(2)
-          background-image: url(../assets/images.png)
+          background-image: url(../assets/happy.png)
           background-repeat: no-repeat
           background-size: 25px 25px
           background-position: center center

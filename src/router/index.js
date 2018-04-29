@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Show from '../view/Show.vue'
-import Activity from '../view/Activity.vue'
-import Search from '../view/Search.vue'
-import Loan from '../view/Loan.vue'
+import Show from '../view/Show'
+import Activity from '../view/Activity'
+import Search from '../view/Search'
+import Door from '../view/Door'
+import Loan from '../view/Loan'
 import Robot from '../view/Robot'
 import Home from '../view/Home'
 import Register from '../view/Register'
 import Login from '../view/Login'
-import Chat from '../view/Chat.vue'
-import ChatHistory from '../view/ChatHistory.vue'
-import BaseTransition from '../BaseTransition.vue'
+import Chat from '../view/Chat'
+import ChatHistory from '../view/ChatHistory'
+import BaseTransition from '../BaseTransition'
 import loading from '../components/loading/loading'
 
 Router.prototype.goBack = function () {
@@ -22,11 +23,11 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/',
-      name: 'BaseTransition',
-      component: BaseTransition,
-      children: [
+    // {
+    //   path: '/',
+    //   name: 'BaseTransition',
+    //   component: BaseTransition,
+    //   children: [
         {
           path: '',
           name: 'index',
@@ -56,9 +57,9 @@ const router = new Router({
             path: '/search',
             name: 'search',
             component: Search
-        }
-      ]
-    },
+        },
+    //   ]
+    // },
     {
       path: '/robot',
       name: 'Robot',
@@ -78,6 +79,18 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+        path: '/door',
+        name: 'door',
+        component: Door
+        // children: [
+        //     {
+        //         path: '/search',
+        //         name: 'search',
+        //         component: Search
+        //     }
+        // ]
     }
   ]
 })

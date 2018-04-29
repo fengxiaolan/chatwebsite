@@ -16,6 +16,8 @@ var MessageSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   }
+}, {
+    versionKey: false
 })
 //静态方法
 MessageSchema.statics = {

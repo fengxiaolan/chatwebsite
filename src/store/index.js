@@ -121,7 +121,7 @@ const store = new Vuex.Store({
         // commit('setAllMessHistory', res.data.data.data)
       }
    },
-  async getRobatMess({commit}, data) {
+    async getRobatMess({commit}, data) {
       let robotdata = ''
       const res = await url.getRobotMessage(data)
       if (res) {
@@ -138,7 +138,7 @@ const store = new Vuex.Store({
               commit('setRobotMsg', {message: '暂不支持此类对话', user: 'robot'})
           }
       }
-   },
+    },
     async searchUserinfo({commit}, data) {
         const res = await url.searchUser(data)
         if (res.data.errno === 0) {
@@ -152,7 +152,7 @@ const store = new Vuex.Store({
             data: res.data
         }
     },
-    async deleteUser({commit}, data) {
+    async deleteUserinfo({commit}, data) {
         const res = await url.deleteUser(data)
         if (res.data.errno === 0) {
             return {
@@ -165,7 +165,7 @@ const store = new Vuex.Store({
             data: res.data
         }
     },
-    async addFriend({commit}, data) {
+    async addFriends({commit}, data) {
         const res = await url.addFriend(data)
         if (res.data.errno === 0) {
             return {
@@ -187,7 +187,20 @@ const store = new Vuex.Store({
             }
             // commit('setAllMessHistory', res.data.data.data)
         }
-    }
+    },
+    async reNames({commit}, data) {
+          const res = await url.reName(data)
+          if (res.data.data.errno === 0) {
+              return {
+                  status: 'success',
+                  data: res.data
+              }
+          }
+          return {
+            status: 'fail',
+            data: res.data
+          }
+      }
   }
 })
 export default store

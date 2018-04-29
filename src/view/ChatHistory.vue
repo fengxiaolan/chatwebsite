@@ -59,10 +59,10 @@
       if (!roomId) {
         this.$router.push({path: '/'})
       }
-      if (!getItem('userid')) {
-        // 防止未登录
-        this.$router.push({path: '/login'})
-      }
+      // if (!getItem('userid')) {
+      //   // 防止未登录
+      //   this.$router.push({path: '/login'})
+      // }
       this.useranme = getItem('userid')
     },
     mounted() {

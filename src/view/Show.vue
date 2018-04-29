@@ -3,42 +3,46 @@
         <div class="wrap">
             <Swiper></Swiper>
         </div>
-        <!--<div class="gridlist-container">-->
-            <!--<mu-grid-list class="gridlist-inline-demo">-->
-                <!--<mu-grid-tile v-for="(tile, index) in list" :key="index">-->
-                    <!--<img :src="tile.image"/>-->
-                    <!--<span slot="title">{{tile.title}}</span>-->
-                    <!--<span slot="subTitle">by <b>{{tile.author}}</b></span>-->
-                    <!--<mu-icon-button icon="star_border" slot="action" @click="tosearch"/>-->
-                <!--</mu-grid-tile>-->
-            <!--</mu-grid-list>-->
-        <!--</div>-->
 
         <div class="gridlist-container">
-            <h2 style="font-size: 14px; color: indianred;">每日推荐</h2>
+            <h2 style="font-size: 14px; color: white; background: #f00; text-align: center; width: 100px;">每日推荐</h2>
             <ul class="showimg">
                 <li v-for="(val, idx) in list" :key="idx">
                     <img :src="val.image"/>
                     <div class="titlebar" @click="chatwindow(val.author)">
-                        <span style="color: white; font-size: 16px; ">{{val.age}}</span><br/>
+                        <span style="color: white; font-size: 16px; ">{{val.title}}</span><br/>
                         <span style="color: white; font-size: 13px;">{{val.author}}</span>
                     </div>
                 </li>
             </ul>
-            <!--<mu-grid-list class="gridlist">-->
-                <!--<mu-sub-header>图片展示</mu-sub-header>-->
-                <!--<mu-grid-tile v-for="tile, index in list" :key="index">-->
-                    <!--<img :src="tile.image"/>-->
-                    <!--<span slot="title">{{tile.title}}</span>-->
-                    <!--<span slot="subTitle">by <b>{{tile.author}}</b></span>-->
-                    <!--<mu-icon-button icon="star_border" slot="action" @click="chatwindow(tile.author)"/>-->
-                <!--</mu-grid-tile>-->
-            <!--</mu-grid-list>-->
         </div>
 
+        <div class="containright">
+            <img :src="src" style="width: 80px; height: 80px; border-radius: 50%; margin-left: 80px;" />
+            <mu-menu>
+                <mu-menu-item title="上传形象照">
+                    <mu-badge content="12" slot="after"/>
+                </mu-menu-item>
+                <mu-menu-item title="填写资料">
+                    <mu-badge content="old" primary slot="after"/>
+                </mu-menu-item>
+                <mu-menu-item title="认证身份">
+                    <mu-badge content="news" secondary slot="after"/>
+                </mu-menu-item>
+            </mu-menu>
+            <div class="litimg">
+                <img src="static/img/b1.jpg" alt=""/>
+                <img src="static/img/b2.jpg" alt=""/>
+                <img src="static/img/b3.jpg" alt=""/>
+            </div>
+        </div>
+
+        <div class="fiximg">
+        </div>
         <!--底部固定提醒-->
         <div class="fixmsg">
-            最新消息
+            <mu-icon value="flight_takeoff" color="red"/>
+            <span style="color: red; line-height: 26px; display: inline-block; height: 36px;position: absolute;bottom: -12px;margin-left: 6px;">查看最新消息</span>
         </div>
 
     </div>
@@ -55,41 +59,85 @@
         name: 'show',
         data () {
             return {
+                src: '',
                 list: [{
-                    image: './static/img/1.jpg',
-                    title: 'Breakfast',
+                    image: './static/img/a1.jpg',
+                    title: '快来撩我啊！',
                     author: 'Myron',
                 }, {
-                    image: './static/img/1.jpg',
-                    title: 'Burger',
-                    author: 'Linyu',
-                    age: '27/168'
+                    image: './static/img/a3.jpg',
+                    title: '等你',
+                    author: 'ruolin'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a4.jpg',
+                    title: '呵呵呵哒',
+                    author: 'kakali'
+                },  {
+                    image: './static/img/a5.jpg',
+                    title: '么么哒',
+                    author: 'Bob'
+                }, {
+                    image: './static/img/a6.jpg',
+                    title: '嘻嘻',
+                    author: 'kakali'
+                }, {
+                    image: './static/img/a7.jpg',
+                    title: '这里等你',
+                    author: 'alic'
+                },  {
+                    image: './static/img/a8.jpg',
+                    title: '人生无处不相逢',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a9.jpg',
+                    title: 'Camera',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a10.jpg',
+                    title: 'Camera',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a12.jpg',
+                    title: 'Camera',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a13.jpg',
+                    title: 'Camera',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a14.jpg',
+                    title: 'Camera',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a15.jpg',
                     title: 'Camera',
                     author: 'ruolin'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a16.jpg',
+                    title: 'Hats',
+                    author: 'kakali'
+                }, {
+                    image: './static/img/a18.jpg',
                     title: 'Hats',
                     author: 'kakali'
                 },  {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a19.jpg',
                     title: 'Camera',
                     author: 'ruolin'
-                }, {
-                    image: './static/img/1.jpg',
-                    title: 'Hats',
-                    author: 'kakali'
-                }, {
-                    image: './static/img/1.jpg',
-                    title: 'Hats',
-                    author: 'kakali'
                 },  {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a20.jpg',
+                    title: 'Camera',
+                    author: 'ruolin'
+                },  {
+                    image: './static/img/a21.jpg',
                     title: 'Camera',
                     author: 'ruolin'
                 }, {
-                    image: './static/img/1.jpg',
+                    image: './static/img/a22.jpg',
+                    title: 'Hats',
+                    author: 'kakali'
+                }, {
+                    image: './static/img/a23.jpg',
                     title: 'Hats',
                     author: 'kakali'
                 }]
@@ -110,6 +158,8 @@
             //     this.$store.commit('setTab', true)
             // }
             this.$store.commit('setTab', true)
+
+            this.src = getItem('src')
         },
         created() {
             if (!this.getSocket) {
@@ -144,26 +194,20 @@
     h2{
         color: yellow;
     }
-    /*.wrap{*/
-        /*width: 100%;*/
-        /*height: 200px;*/
-        /*overflow: hidden;*/
-    /*}*/
-
-    /*.gridlist-container{*/
-        /*display: flex;*/
-        /*flex-wrap: wrap;*/
-        /*justify-content: space-around;*/
-    /*}*/
-
-    /*.gridlist-inline-demo{*/
-        /*display: flex;*/
-        /*flex-wrap: nowrap;*/
-        /*overflow-x: auto;*/
-    /*}*/
+   .containright {
+       float: right;
+       width: 20%;
+       margin-left: 5px;
+       padding-top: 25px;
+   }
+   .litimg img {
+      width: 100%;
+      height: 100%;
+   }
 
     .gridlist-container{
-        width: 100%;
+        width: 78%;
+        float: left;
     }
 
     .mu-grid-list{
@@ -208,8 +252,9 @@
         position: fixed;
         bottom: 0;
         right: 0;
-        width: 100%;
-        height: 22px;
-        background: yellow;
+        width: 150px;
+        height: 26px;
+        background: #f3b93f;
+        line-height: 26px;
     }
 </style>

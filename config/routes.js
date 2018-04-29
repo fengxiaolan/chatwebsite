@@ -1,4 +1,5 @@
 const User = require('../models/user')
+var Friend = require('../models/friend')
 const Message = require('../models/message')
 const superagent = require('superagent')
 const fs = require('fs')
@@ -158,10 +159,32 @@ module.exports =  (app) => {
     })
   }),
 
-  //查询用户
-  app.get('/userinfo', function (req, res) {
+  //注销当前用户
+  app.post('/deleteuser', function (req, res) {
       var _user = req.body
       var name = _user.name
+      User.remove({name: name}, function (err) {
+          if (err) {
+              console.error(err)
+              res.json({
+                  errno: 1,
+                  data: '删除未成功'
+              });
+          } else {
+              console.info("用户删除成功")
+              res.json({
+                  errno: 0,
+                  data: '删除成功'
+              })
+          }
+      })
+  }),
+
+  //查询用户
+  app.post('/userinfo', function (req, res) {
+      console.log(req.body)
+      var _user = req.body;
+      var name = _user.name;
       User.find({name: name}, function (err, user) {
           if (err) {
               console.log(err);
@@ -172,12 +195,62 @@ module.exports =  (app) => {
                   data: '用户不存在'
               })
           } else {
+              console.log(user)
               res.json({
                   errno: 0,
-                  data: user
+                  data: '搜索成功',
+                  name: user.name,
+                  src: user.src
               })
           }
       })
+  }),
+  //添加好友
+  app.post('/addfriend', function (req, res) {
+      var _user = req.body;
+      var name = _user.name;
+      Friend.find({name: name}, function (err, user) {
+          if (err) {
+              console.log(err)
+          }
+          if (user) {
+              res.json({
+                  errno: 1,
+                  data: '已是好友'
+              })
+          } else {
+              var friend = new Friend({name: name})
+              friend.save(function (err, friend) {
+                  if (err) {
+                      console.log(err)
+                  }
+                  res.json({
+                      errno: 0,
+                      data: '添加好友成功'
+                  })
+              })
+          }
+      })
+  }),
+
+  //修改用户名
+  app.post('/rename', function (req, res){
+    var _user = req.body;
+    var name = _user.name;
+    User.update({name: name}, {password: '111'}, function (err) {
+        if(err) {
+            console.log(err)
+            res.json({
+                errno: 1,
+                data: err
+            })
+        } else {
+            res.json({
+                errno: 0,
+                data: '重置密码成功111'
+            })
+        }
+    })
   }),
 
   // 信息

@@ -8,6 +8,7 @@ import 'muse-ui/dist/muse-ui.css'
 import './styles/main.styl'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VDistpicker from 'v-distpicker'
+import 'swiper/dist/css/swiper.css'
 Vue.use(VDistpicker)
 Vue.use(VueAwesomeSwiper)
 Vue.use(MuseUI)

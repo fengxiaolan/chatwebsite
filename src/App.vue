@@ -1,31 +1,22 @@
 <template>
   <div id="app">
     <!--tab选项卡-->
-    <!--<div class="app-bottom" v-if="istab">-->
       <div class="heads">
-        <!--<a href="javascript:void();" @click="userinfo">用户信息</a>-->
         <h2 class="logotext">刚好遇见你</h2>
         <mu-flat-button label="退出" class="flat-button" icon="home"  @click="logout" color="grey"/>
         <mu-flat-button label="我的" class="flat-button" icon="person" color="orange" to="/home" />
       </div>
-      <!--<mu-paper>-->
-        <!--<mu-bottom-nav :value="bottomNav" @change="handleChange">-->
-          <!--<mu-bottom-nav-item value="index" title="首页"  to="/"/>-->
-          <!--<mu-bottom-nav-item value="recents" title="同城聊"  to="/loan"/>-->
-          <!--<mu-bottom-nav-item value="favorites" title="无聊"  to="/robot"/>-->
-        <!--</mu-bottom-nav>-->
-      <!--</mu-paper>-->
       <ul class="nav">
         <li>&nbsp;</li>
         <li><router-link to="/">首页</router-link></li>
-        <li><router-link to="/activity">门店活动</router-link></li>
-        <li><router-link to="/search">搜索</router-link></li>
         <li><router-link to="/loan">同城聊</router-link></li>
         <li><router-link to="/robot">智能对话</router-link></li>
+        <li><router-link to="/activity">门店活动</router-link></li>
+        <li><router-link to="/search">搜索</router-link></li>
+        <li><router-link to="/door">直营门店</router-link></li>
       </ul>
 
       <router-view></router-view>
-    <!--</div>-->
   </div>
 </template>
 
@@ -86,6 +77,11 @@
    #app{
      width:100%;
      height: 100%;
+     position: relative;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
    }
   .heads{
     height: 36px;

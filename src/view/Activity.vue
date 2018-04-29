@@ -2,12 +2,12 @@
     <div>
         <div class="recomd">
             <mu-card>
-                <!--<mu-card-header title="Myron Avatar" subTitle="sub title">-->
-                    <!--<mu-avatar src="/static/img/5.jpg" slot="avatar"/>-->
-                <!--</mu-card-header>-->
-                <!--<mu-card-media title="Image Title" subTitle="Image Sub Title">-->
-                    <!--<img src="/static/img/5.jpg" />-->
-                <!--</mu-card-media>-->
+                <mu-card-header title="Myron Avatar" subTitle="sub title">
+                    <mu-avatar src="/static/img/5.jpg" slot="avatar"/>
+                </mu-card-header>
+                <mu-card-media title="Image Title" subTitle="Image Sub Title">
+                    <img src="/static/img/5.jpg" />
+                </mu-card-media>
                 <mu-card-title title="Content Title" subTitle="散落在指尖的阳光！"/>
                 <mu-card-text>
                     散落在指尖的阳光，我试着轻轻抓住光影的踪迹，它却在眉宇间投下一片淡淡的阴影。
@@ -20,7 +20,7 @@
         </div>
         <div class="acontent">
             <div class="demo-vsteper-container">
-                <h2 style="color: red; font-size: 14px; background: pink;">活动流程：</h2>
+                <h2 style="color: red; font-size: 16px; ">活动流程：</h2>
                 <mu-stepper :activeStep="activeStep" orientation="vertical">
                     <mu-step>
                         <mu-step-label>
@@ -63,11 +63,11 @@
                 </p>
             </div>
             <div class="markactivity">
-                <h2 style="color: red; font-size: 14px;">活动登记：</h2>
-                <v-distpicker></v-distpicker>
+                <h2 style="color: red; font-size: 16px;">活动登记：</h2>
+                <v-distpicker @onSelected="areatext"></v-distpicker>
                 <mu-date-picker container="inline" hintText="时间选择"/><br/>
                 <mu-text-field hintText="群号"/><br/>
-                <mu-raised-button label="确定" class="demo-raised-button" primary/>
+                <mu-raised-button label="确定" primary @click="actok"/>
             </div>
         </div>
     </div>
@@ -75,6 +75,8 @@
 
 <script>
     import VDistpicker from 'v-distpicker'
+    import Confirm from '../components/Confirm'
+
     export default {
         name: "activity",
         data() {
@@ -117,6 +119,14 @@
             },
             reset () {
                 this.activeStep = 0
+            },
+            areatext(data) {
+                console.log(data)
+            },
+            actok() {
+                Confirm({
+                    content: '提交成功'
+                })
             }
         }
     }
@@ -137,20 +147,19 @@
         margin-right: 12px;
     }
 
-    .mu-card-media>img {
+    .mu-card-media > img {
         width: 100%;
         display: block;
         vertical-align: top;
-        height: 200px;
+        height: 400px;
     }
 
 
     .demo-vsteper-container{
         max-width: 380px;
         max-height: 400px;
-        padding-right: 50px;
+        padding: 0 50px;
         border-right: 1px solid #7e8c8d;
-        /*display: inline-block;*/
         float: left;
     }
 
@@ -160,9 +169,9 @@
     }
 
     .markactivity {
-        padding-left: 50px;
+        padding: 0 50px;
         /*display: inline-block;*/
-        float: right;
+        float: left;
     }
 
     .acontent {

@@ -26,34 +26,33 @@
         <mu-list-item title="我的好友">
           <mu-icon slot="left" value="grade"/>
         </mu-list-item>
-        <!--<mu-list-item title="我的动态">-->
-          <!--<mu-icon slot="left" value="send"/>-->
-        <!--</mu-list-item>-->
-        <!--<mu-list-item title="设置">-->
-          <!--<mu-icon slot="left" value="drafts"/>-->
-        <!--</mu-list-item>-->
         <mu-list-item title="退出" @click="logout">
           <mu-icon slot="left" value="drafts"/>
         </mu-list-item>
         <mu-list-item title="注销" @click="deleteuser">
-          <mu-icon slot="left" value="drafts"/>
+          <mu-icon slot="left" value="home"/>
+        </mu-list-item>
+        <mu-list-item title="重置密码" @click="renamebtn">
+          <mu-icon slot="left" value="send"/>
         </mu-list-item>
       </mu-list>
-      <!--<mu-divider/>-->
     </div>
+
     <div style="height:80px"></div>
   </div>
 </template>
 
 <script>
-  import {clear, getItem} from '../utils/localStorage'
+  import {clear, getItem, setItem} from '../utils/localStorage'
   import axios from 'axios'
+  import Alert from '../components/Alert'
 
   export default{
     data() {
       return {
         username: '',
         src: '',
+        rename: '',
         list: []
       }
     },
@@ -66,8 +65,8 @@
     },
     created() {
       //查看好友
-        const res = this.$store.dispatch('sgoodFriend');
-        console.log(res);
+      //   const res = this.$store.dispatch('sgoodFriend');
+      //   console.log(res);
     },
     methods: {
       logout() {
@@ -75,14 +74,18 @@
         this.$router.push('/login')
         this.$store.commit('setTab', false)
       },
-      deleteuser() {
+      async deleteuser() {
         var name = getItem('userid')
         const data = {
             name: name
-        }
-        const res = this.$store.dispatch('deleteUser', data)
+        };
+        const res = await this.$store.dispatch('deleteUserinfo', data);
           if (res.status === 'success') {
               console.log(res)
+              await Alert({
+                  content: res.data.data
+              });
+              this.$router.push({path: '/login'})
           } else {
               console.error("没有找到");
           }
@@ -109,6 +112,22 @@
       imgupload() {
           const file = document.getElementById('inputFile')
           file.click()
+      },
+      async renamebtn() {
+          var name = getItem('userid')
+          const data = {
+              name: name
+          }
+          const res = await this.$store.dispatch('reNames', data);
+          if (res.status === 'success') {
+              await Alert({
+                  content: res.data.data
+              });
+          } else {
+              await Alert({
+                  content: res.data.data
+              });
+          }
       }
     }
   }

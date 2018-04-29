@@ -4,15 +4,15 @@
       <mu-list>
         <mu-sub-header>常用聊天记录</mu-sub-header>
         <mu-list-item title="四川" @click="chatwindow('room1')">
-          <mu-avatar src="./static/img/1.jpg" slot="leftAvatar"/>
+          <mu-avatar slot="left" color="deepOrange300" backgroundColor="red">川</mu-avatar>
           <mu-icon value="chat_bubble" slot="right"/>
         </mu-list-item>
         <mu-list-item title="全国" @click="chatwindow('room2')">
-          <mu-avatar src="./static/img/2.jpg" slot="leftAvatar"/>
+          <mu-avatar slot="left" color="deepOrange300" backgroundColor="green">国</mu-avatar>
           <mu-icon value="chat_bubble" slot="right"/>
         </mu-list-item>
-        <mu-list-item title="其他" @click="chatwindow('room3')">
-          <mu-avatar slot="left" color="deepOrange300" backgroundColor="purple500">ZH</mu-avatar>
+        <mu-list-item title="成都" @click="chatwindow('room3')">
+          <mu-avatar slot="left" color="deepOrange300" backgroundColor="purple500">都</mu-avatar>
           <mu-icon value="chat_bubble" slot="right"/>
         </mu-list-item>
       </mu-list>
@@ -20,15 +20,15 @@
       <mu-list>
         <mu-sub-header>历史聊天记录</mu-sub-header>
         <mu-list-item title="四川" @click="chatHistory('room1')">
-          <mu-avatar src="./static/img/6.jpg" slot="leftAvatar"/>
+          <mu-avatar slot="left" color="deepOrange300" backgroundColor="red">川</mu-avatar>
           <mu-icon value="chat_bubble" slot="right"/>
         </mu-list-item>
         <mu-list-item title="全国" @click="chatHistory('room2')">
-          <mu-avatar src="./static/img/7.jpg" slot="leftAvatar"/>
+          <mu-avatar slot="left" color="deepOrange300" backgroundColor="green">国</mu-avatar>
           <mu-icon value="chat_bubble" slot="right"/>
         </mu-list-item>
-        <mu-list-item title="其他" @click="chatHistory('room3')">
-          <mu-avatar slot="left" color="deepOrange300" backgroundColor="purple500">成都</mu-avatar>
+        <mu-list-item title="成都" @click="chatHistory('room3')">
+          <mu-avatar slot="left" color="deepOrange300" backgroundColor="purple500">都</mu-avatar>
           <mu-icon value="chat_bubble" slot="right"/>
         </mu-list-item>
       </mu-list>
