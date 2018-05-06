@@ -141,15 +141,15 @@ const store = new Vuex.Store({
     },
     async searchUserinfo({commit}, data) {
         const res = await url.searchUser(data)
-        if (res.data.errno === 0) {
+        if (res.data.data.errno === 0) {
             return {
                 status: 'success',
-                data: res.data
+                data: res.data.data.data
             }
         }
         return {
             status: 'fail',
-            data: res.data
+            data: res.data.data.data
         }
     },
     async deleteUserinfo({commit}, data) {
@@ -182,10 +182,13 @@ const store = new Vuex.Store({
         const res = await url.goodFriend(data)
         if (res.data.data.errno === 0) {
             return {
-                data: res.data.data.data,
-                total: res.data.data.total
+                status: 'success',
+                data: res.data.data.data
             }
-            // commit('setAllMessHistory', res.data.data.data)
+        }
+        return {
+            status: 'fail',
+            data: res.data.data.data
         }
     },
     async reNames({commit}, data) {

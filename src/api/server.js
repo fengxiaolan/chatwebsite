@@ -26,7 +26,7 @@ const Service = {
   //添加好友
   addFriend: data => Axios.post('/addfriend', data),
   //查看好友
-  goodFriend:  data => Axios.get('/goodfriend', {
+  goodFriend:  data => Axios.get('/sgoodfriend', {
       params: data
   }),
   //修改用户名

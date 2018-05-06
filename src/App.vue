@@ -85,7 +85,7 @@
    }
   .heads{
     height: 36px;
-    background: peachpuff;
+    background: #fcfcfa;
   }
   .mu-flat-button {
     color: #ed3f14;
@@ -96,7 +96,7 @@
   .nav{
     width: 100%;
     height: 30px;
-    background: red;
+    background: #f44336;
   }
   .nav li{
     padding: 0 2px;
@@ -112,7 +112,8 @@
   .router-link-exact-active{
     height:30px;
     display: block;
-    background:darkred;
+    background: #dc0909;
+    color: white;
   }
 
 

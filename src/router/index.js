@@ -13,6 +13,10 @@ import Chat from '../view/Chat'
 import ChatHistory from '../view/ChatHistory'
 import BaseTransition from '../BaseTransition'
 import loading from '../components/loading/loading'
+import Service from '../components/Service'
+import Story from '../components/Story'
+import Beatatc from '../components/Beatatc'
+import Addr from '../components/Addr'
 
 Router.prototype.goBack = function () {
   this.isBack = true
@@ -83,14 +87,29 @@ const router = new Router({
     {
         path: '/door',
         name: 'door',
-        component: Door
-        // children: [
-        //     {
-        //         path: '/search',
-        //         name: 'search',
-        //         component: Search
-        //     }
-        // ]
+        component: Door,
+        children: [
+            {
+                path: '/service',
+                name: 'service',
+                component: Service
+            },
+            {
+                path: '/story',
+                name: 'story',
+                component: Story
+            },
+            {
+                path: '/beatatc',
+                name: 'beatatc',
+                component: Beatatc
+            },
+            {
+                path: '/addr',
+                name: 'addr',
+                component: Addr
+            }
+        ]
     }
   ]
 })

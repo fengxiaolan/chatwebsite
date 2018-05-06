@@ -85,13 +85,13 @@
                               v-model="searchValue"
                               @change="handleChange"
             />
+            <div v-if="searchsource.length === 0" >赶快来搜索你的好友吧！</div>
             <mu-list>
-                <mu-list-item title="搜" v-for="(val, index) in searchsource" :key="index" >
-                    <mu-avatar color="white" :src="val.src" backgroundColor="lightgreen" :size="32" @click="addfriend(val.name)"></mu-avatar>{{val.name}}
-                    <mu-icon slot="right" value="info"/>
+                <mu-list-item v-for="(val, index) in searchsource" :key="index" title="">
+                    <mu-avatar color="white" :src="val.src" backgroundColor="lightgreen" :size="32" @click="chatwindow(val.name)"></mu-avatar>&nbsp;&nbsp; {{val.name}}
+                    <mu-icon slot="right" value="info" @click="addfriend(val.name)"/>
                 </mu-list-item>
             </mu-list>
-            <mu-raised-button label="添加" @click="addfriend('fxlan')"/>
         </div>
         <!--推荐-->
         <div class="recomd">
@@ -112,6 +112,7 @@
 
 <script>
     import axios from 'axios'
+    import {clear, getItem, setItem} from '../utils/localStorage'
     import Alert from '../components/Alert'
 
     export default {
@@ -191,7 +192,7 @@
                 };
                 const res = await this.$store.dispatch('searchUserinfo', data)
                 if (res.status === 'success') {
-                    this.searchsource = res
+                    this.searchsource = res.data
                 } else {
                     console.error("没有找到");
                 }
@@ -204,8 +205,10 @@
                 this.$router.push({path: '/chat', query: {roomId: roomID}})
             },
             async addfriend (user) {
+                var name = getItem('userid')
                 const data = {
-                    name: user
+                    name: name,
+                    newname: user
                 };
                 const res = await this.$store.dispatch('addFriends', data);
                 if (res.status === 'success') {

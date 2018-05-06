@@ -18,10 +18,10 @@
         </div>
 
         <div class="containright">
-            <img :src="src" style="width: 80px; height: 80px; border-radius: 50%; margin-left: 80px;" />
+            <img :src="src" style="width: 80px; height: 80px; border-radius: 50%; margin-left: 80px;" @click="tomy"/>
             <mu-menu>
                 <mu-menu-item title="上传形象照">
-                    <mu-badge content="12" slot="after"/>
+                    <mu-badge content="style" slot="after"/>
                 </mu-menu-item>
                 <mu-menu-item title="填写资料">
                     <mu-badge content="old" primary slot="after"/>
@@ -44,6 +44,11 @@
             <mu-icon value="flight_takeoff" color="red"/>
             <span style="color: red; line-height: 26px; display: inline-block; height: 36px;position: absolute;bottom: -12px;margin-left: 6px;">查看最新消息</span>
         </div>
+        <!--侧边栏固定扫码-->
+        <div class="asides" @mouseover="overShow" @mouseleave="overhide">
+            点我咨询
+            <div :class="{erma: showerma}"></div>
+        </div>
 
     </div>
 </template>
@@ -60,6 +65,7 @@
         data () {
             return {
                 src: '',
+                showerma: false,
                 list: [{
                     image: './static/img/a1.jpg',
                     title: '快来撩我啊！',
@@ -173,6 +179,15 @@
             chatwindow(roomID) {
                 this.$store.commit('setTab', false)
                 this.$router.push({path: '/chat', query: {roomId: roomID}})
+            },
+            overShow() {
+                this.showerma = true
+            },
+            overhide() {
+                this.showerma = false
+            },
+            tomy() {
+                this.$router.push({path: '/home'})
             }
         },
         computed: {
@@ -257,4 +272,25 @@
         background: #f3b93f;
         line-height: 26px;
     }
+
+    .asides{
+        position: fixed;
+        right: 10px;
+        bottom: 100px;
+        background: red;
+        color: white;
+        width: 20px;
+        height: 80px;
+        text-align: center;
+    }
+
+    .erma{
+        width: 100px;
+        height: 100px;
+        position: fixed;
+        right: 20px;
+        bottom: 100px;
+        background: yellow;
+    }
+
 </style>

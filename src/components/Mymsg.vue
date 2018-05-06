@@ -16,6 +16,8 @@
 <script type="text/ecmascript-6">
     import dateFormat from '../utils/date'
     import { getItem } from '../utils/localStorage.js'
+    //https://division-data.alicdn.com/simple/addr_3_001.js?t=1525425428096
+
     export default{
         data() {
             return {

@@ -10,6 +10,10 @@ var UserSchema = new mongoose.Schema({
   },
   password: String,
   src: String,
+  age: Number,
+  sex: String,
+  marry: String,
+  love: String,
   meta: {
     createAt: {
       type: Date,

@@ -171,7 +171,7 @@ module.exports =  (app) => {
                   data: '删除未成功'
               });
           } else {
-              console.info("用户删除成功")
+              console.info("用户注销成功")
               res.json({
                   errno: 0,
                   data: '删除成功'
@@ -182,44 +182,46 @@ module.exports =  (app) => {
 
   //查询用户
   app.post('/userinfo', function (req, res) {
-      console.log(req.body)
       var _user = req.body;
       var name = _user.name;
-      User.find({name: name}, function (err, user) {
+      User.find({name: name}, function (err, data) {
+          var searchinfo = {
+              errno: 0,
+              data: {}
+          }
           if (err) {
               console.log(err);
-          }
-          if (!user) {
-              res.json({
-                  errno: 1,
-                  data: '用户不存在'
-              })
           } else {
-              console.log(user)
+              searchinfo.data = data
+
               res.json({
-                  errno: 0,
-                  data: '搜索成功',
-                  name: user.name,
-                  src: user.src
+                  data: searchinfo
               })
           }
       })
   }),
+
   //添加好友
   app.post('/addfriend', function (req, res) {
       var _user = req.body;
-      var name = _user.name;
+      var name= _user.name;
+      var newname = _user.newname;
       Friend.find({name: name}, function (err, user) {
+          var newfriend = {
+              name: name,
+              newname: newname
+          }
           if (err) {
               console.log(err)
           }
-          if (user) {
+          if (user.length !== 0) {
+              console.info('aa', user)
               res.json({
                   errno: 1,
                   data: '已是好友'
               })
           } else {
-              var friend = new Friend({name: name})
+              var friend = new Friend(newfriend)
               friend.save(function (err, friend) {
                   if (err) {
                       console.log(err)
@@ -228,6 +230,28 @@ module.exports =  (app) => {
                       errno: 0,
                       data: '添加好友成功'
                   })
+                  console.info('bb', friend)
+              })
+          }
+      })
+  }),
+
+  //查看好友6+
+  app.get('/sgoodfriend', function (req, res) {
+      var _user = req.body;
+      var name = _user.name;
+      var searchgood = {
+          errno: 0,
+          data: {}
+      }
+      Friend.find({name: name},function (err, data) {
+          if (err) {
+              console.log(err);
+          } else {
+              searchgood.data = data
+
+              res.json({
+                  data: searchgood
               })
           }
       })

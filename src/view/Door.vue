@@ -4,10 +4,10 @@
            <h2 class="toplogo">刚好遇见你</h2>
            <ul class="topitem">
                <li><router-link to="/door">首页</router-link></li>
-               <li><router-link to="/">服务介绍</router-link></li>
-               <li><router-link to="/">成功故事</router-link></li>
-               <li><router-link to="/">精彩活动</router-link></li>
-               <li><router-link to="/">门店地址</router-link></li>
+               <li><router-link to="/service">服务介绍</router-link></li>
+               <li><router-link to="/story">成功故事</router-link></li>
+               <li><router-link to="/beatatc">精彩活动</router-link></li>
+               <li><router-link to="/addr">门店地址</router-link></li>
            </ul>
        </div>
        <div class="content">
@@ -33,6 +33,8 @@
         right: 0;
         top: 0;
         bottom: 0;
+        width: 100%;
+        height: 100%;
     }
     .topcon{
         height: 30px;
@@ -76,6 +78,7 @@
     .contact {
         width: 300px;
         height: 120px;
+        border-radius: 5px;
         padding: 10px 0;
         background: #fff;
         position: absolute;

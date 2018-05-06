@@ -7,6 +7,18 @@
         <br/>
         <mu-text-field label="密码" type="password" labelFloat name="password"/>
         <br/>
+
+        <mu-radio label="男" name="sexgroup" v-model="sexval"/>
+        <mu-radio label="女" name="sexgroup" v-model="sexval"/><br/>
+
+        <mu-text-field hintText="年龄" v-model="ageval"/><br/>
+
+        <mu-radio label="未婚" name="margroup" v-model="marval"/>
+        <mu-radio label="离异" name="margroup" v-model="marval"/>
+        <mu-radio label="丧偶" name="margroup" v-model="marval"/><br/>
+
+        <mu-checkbox v-model="loveval" label="旅游"/>
+        <mu-checkbox v-model="loveval" label="看书"/> <br/>
         <div class="btn-radius" @click="submit">注册</div>
       </form>
       <div @click="login" class="tip-user">
@@ -21,6 +33,14 @@
   import { mapState } from 'vuex'
   import Alert from '../components/Alert'
   export default {
+    data () {
+        return {
+            sexval: '',
+            marval: '',
+            ageval: '',
+            loveval: ''
+        }
+    },
     methods: {
       async submit() {
         const name = document.form1.username.value.trim()
@@ -34,7 +54,11 @@
           const data = {
             name: name,
             password: password,
-            src: src
+            src: src,
+            sex: this.sexval,
+            marry: this.marval,
+            age: this.ageval,
+            love: this.loveval
           }
           const res = await this.$store.dispatch('registerSubmit', data)
           if (res.status === 'success') {
@@ -79,7 +103,7 @@
     margin-top: 30px
     border : 1px solid rgba(255, 255, 255, 0.38)
     background: rgba(255,255,255 ,0.02)
-    color: #fff;
+    color: #ff0;
     line-height: 40px
     text-align : center
     border-radius: 5px
@@ -109,7 +133,7 @@
     right: 0
     top: 0
     bottom: 0
-    background-image: url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3390114244,1903577621&fm=200&gp=0.jpg")
+    background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525627687296&di=7f236928e8caeadafb2db057e250e405&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F151026%2F14-151026104155V0.jpg")
     background-size: 100% 100%
     background-position : center center
     .mu-appbar

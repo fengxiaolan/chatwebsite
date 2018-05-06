@@ -13,17 +13,23 @@
     </div>
     <div class="content">
       <mu-grid-list class="gridlist-inline-demo">
-        <mu-grid-tile v-for="(val, index) in list" :key="index">
-          <img :src="val.img"/>
+        <mu-grid-tile v-for="(tile, index) in upimg" :key="index">
+          <img :src="tile.img"/>
         </mu-grid-tile>
       </mu-grid-list>
+      <!---->
+      <h2 v-if="goodlist.length > 0">好友列表</h2>
+      <mu-chip v-for="(val, index) in goodlist" :key="index">
+        {{val.newname}}
+      </mu-chip>
+
       <mu-list>
         <mu-list-item title="上传图片" @click="imgupload">
           <mu-icon slot="left" value="inbox"/>
           <input id="inputFile" name='inputFile' type='file' multiple='mutiple' accept="image/*;capture=camera"
                  style="display: none" @change="fileup">
         </mu-list-item>
-        <mu-list-item title="我的好友">
+        <mu-list-item title="我的好友" @click="searchgood">
           <mu-icon slot="left" value="grade"/>
         </mu-list-item>
         <mu-list-item title="退出" @click="logout">
@@ -53,7 +59,9 @@
         username: '',
         src: '',
         rename: '',
-        list: []
+        list: [],
+        goodlist: [],
+        upimg: []
       }
     },
     mounted() {
@@ -63,16 +71,25 @@
       this.username = getItem('userid')
       this.src = getItem('src')
     },
-    created() {
-      //查看好友
-      //   const res = this.$store.dispatch('sgoodFriend');
-      //   console.log(res);
-    },
     methods: {
       logout() {
         clear()
         this.$router.push('/login')
         this.$store.commit('setTab', false)
+      },
+      async searchgood() {
+            //查看好友
+            var name = getItem('userid')
+            var data = {
+                name: name
+            }
+            const res = await this.$store.dispatch('sgoodFriend', data);
+
+            if (res.status === 'success') {
+                this.goodlist = res.data
+            } else {
+                console.error("没有找到");
+            }
       },
       async deleteuser() {
         var name = getItem('userid')
@@ -95,16 +112,28 @@
           const file1 = document.getElementById('inputFile').files[0]
           if (file1) {
               const formdata = new window.FormData()
+              formdata.append('file', file1)
+              formdata.append('username', getItem('userid'))
+              formdata.append('src', getItem('src'))
+              formdata.append('roomid', that.roomid)
+              formdata.append('time', new Date())
               this.$store.dispatch('uploadImg', formdata)
               const fr = new window.FileReader()
               fr.onload = function () {
                   const obj = {
+                      username: getItem('userid'),
+                      src: getItem('src'),
                       img: fr.result,
+                      msg: '',
+                      room: that.roomid,
                       time: new Date()
                   }
-                  this.list.push(obj)
+                  that.getSocket.emit('message', obj)
               }
               fr.readAsDataURL(file1)
+              // this.$nextTick(() => {
+              //     this.container.scrollTop = 10000
+              // })
           } else {
               console.log('必须有文件')
           }

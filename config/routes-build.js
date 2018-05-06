@@ -152,186 +152,198 @@ module.exports = function (app) {
       })
     }),
 
-    //注销当前用户
-    app.post('/deleteuser', function (req, res) {
-      var _user = req.body
-      var name = _user.name
-      User.remove({name: name}, function (err) {
-          if (err) {
-              console.error(err)
-              res.json({
-                  errno: 1,
-                  data: '删除未成功'
-              });
-          } else {
-              console.info("用户删除成功")
-              res.json({
-                  errno: 0,
-                  data: '删除成功'
-              })
-          }
-      })
-  }),
-
-    //查询用户
-    app.post('/userinfo', function (req, res) {
-        console.log(req.body)
-        var _user = req.body;
-        var name = _user.name;
-        User.find({name: name}, function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            if (!user) {
-                res.json({
-                    errno: 1,
-                    data: '用户不存在'
-                })
-            } else {
-                console.log(user)
-                res.json({
-                      errno: 0,
-                      data: '搜索成功',
-                      name: data.name,
-                      src: data.src
-                  })
-            }
-        })
-    }),
-
-    //添加好友
-    app.post('/addfriend', function (req, res) {
-        var _user = req.body;
-        var name = _user.name;
-        Friend.find({name: name}, function (err, user) {
-            if (err) {
-                console.log(err)
-            }
-            if (user) {
-                res.json({
-                    errno: 1,
-                    data: '已是好友'
-                })
-            } else {
-                var friend = new Friend({name: name});
-                friend.save(function (err, friend) {
-                    if (err) {
-                        console.log(err)
-                    }
-                    res.json({
-                        errno: 0,
-                        data: '添加好友成功'
-                    })
-                })
-            }
-        })
-    }),
-
-    //查看好友6+
-    app.get('/sgoodfriend', function (req, res) {
-          Friend.find({},function (err, data) {
+      //注销当前用户
+      app.post('/deleteuser', function (req, res) {
+          var _user = req.body
+          var name = _user.name
+          User.remove({name: name}, function (err) {
               if (err) {
-                  console.log(err);
-                  console.log(data);
+                  console.error(err)
+                  res.json({
+                      errno: 1,
+                      data: '删除未成功'
+                  });
               } else {
+                  console.info("用户注销成功")
                   res.json({
                       errno: 0,
-                      data: data
+                      data: '删除成功'
                   })
               }
           })
       }),
 
-    //修改用户名
-    app.post('/rename', function (req, res){
-       var _user = req.body;
-       var name = _user.name;
-       User.update({name: name}, {password: '111'}, function (err) {
-           if(err) {
-               console.log(err)
-           } else {
-               res.json({
-                   errno: 0,
-                   data: '重置密码成功111！'
-               })
-           }
-       })
-    }),
+      //查询用户
+      app.post('/userinfo', function (req, res) {
+          var _user = req.body;
+          var name = _user.name;
+          User.find({name: name}, function (err, data) {
+              var searchinfo = {
+                  errno: 0,
+                  data: {}
+              }
+              if (err) {
+                  console.log(err);
+              } else {
+                  searchinfo.data = data
 
-    // 信息
-    app.get('/message', function (req, res) {
-      var id = req.query.roomid
-      Message.find({roomid: id}).sort({"time": -1}).limit(80).exec(function (err, message) {
-        if (err) {
-          console.log(err)
-        } else {
-          res.json({
-            errno: 0,
-            data: message.reverse()
+                  res.json({
+                      data: searchinfo
+                  })
+              }
           })
-        }
-      })
-    }),
+      }),
 
-    // 获取历史记录
-    app.get('/history/message', function (req, res) {
-      var id = req.query.roomid
-      var current = req.query.current
-      if (!id || !current) {
-        res.json({
-          errno: 1
-        })
-      }
-      var message = {
-        errno: 0,
-        data: {},
-        total: 0,
-        current: current
-      }
-      var task1 = new Promise(function(resolve, reject) {
-        var skip = parseInt((current - 1) * 40)
-        Message.find({roomid: id}).skip(skip).limit(40).exec(function (err, data) {
-          if (err) {
-            console.log(err)
-            return reject()
-          } else {
-            message.data = data
-            return resolve()
-          }
-        })
-      })
-      var task2 = new Promise(function(resolve, reject) {
-        Message.find({roomid: id}).count().exec(function (err, data) {
-          if (err) {
-            console.log(err)
-            return reject()
-          } else {
-            message.total = data
-            return resolve()
-          }
-        })
-      })
-      Promise.all([task1, task2]).then(() => {
-        res.json({
-          data: message
-        })
-      })
-    }),
-    // 机器人消息
-    app.get('/robotapi', function (req, res) {
-      var response = res
-      var info = req.query.info
-      var userid = req.query.id
-      var key = 'fde7f8d0b3c9471cbf787ea0fb0ca043'
-      superagent.post('http://www.tuling123.com/openapi/api')
-        .send({info, userid, key})
-        .end((err, res) => {
-          if (err) {
-            console.log(err)
-          }
-          response.json({
-            data: res.text
+      //添加好友
+      app.post('/addfriend', function (req, res) {
+          var _user = req.body;
+          var name= _user.name;
+          var newname = _user.newname;
+          Friend.find({name: name}, function (err, user) {
+              var newfriend = {
+                  name: name,
+                  newname: newname
+              }
+              if (err) {
+                  console.log(err)
+              }
+              if (user.length !== 0) {
+                  console.info('aa', user)
+                  res.json({
+                      errno: 1,
+                      data: '已是好友'
+                  })
+              } else {
+                  var friend = new Friend(newfriend)
+                  friend.save(function (err, friend) {
+                      if (err) {
+                          console.log(err)
+                      }
+                      res.json({
+                          errno: 0,
+                          data: '添加好友成功'
+                      })
+                      console.info('bb', friend)
+                  })
+              }
           })
-        })
-    })
+      }),
+
+      //查看好友6+
+      app.get('/sgoodfriend', function (req, res) {
+          var _user = req.body;
+          var name = _user.name;
+          var searchgood = {
+              errno: 0,
+              data: {}
+          }
+          Friend.find({name: name},function (err, data) {
+              if (err) {
+                  console.log(err);
+              } else {
+                  searchgood.data = data
+
+                  res.json({
+                      data: searchgood
+                  })
+              }
+          })
+      }),
+
+      //修改用户名
+      app.post('/rename', function (req, res){
+          var _user = req.body;
+          var name = _user.name;
+          User.update({name: name}, {password: '111'}, function (err) {
+              if(err) {
+                  console.log(err)
+                  res.json({
+                      errno: 1,
+                      data: err
+                  })
+              } else {
+                  res.json({
+                      errno: 0,
+                      data: '重置密码成功111'
+                  })
+              }
+          })
+      }),
+
+      // 信息
+      app.get('/message', (req, res) => {
+          const id = req.query.roomid
+          Message.find({roomid: id}).sort({"time": -1}).limit(80).exec((err, message) => {
+              if (err) {
+                  global.logger.error(err)
+              } else {
+                  res.json({
+                      errno: 0,
+                      data: message.reverse()
+                  })
+              }
+          })
+      }),
+      // 获取历史记录
+      app.get('/history/message', (req, res) => {
+          const id = req.query.roomid
+          const current = req.query.current
+          if (!id || !current) {
+              global.logger.error('roomid | page current can\'t find')
+              res.json({
+                  errno: 1
+              });
+          }
+          const message = {
+              errno: 0,
+              data: {},
+              total: 0,
+              current: current
+          }
+          const task1 = new Promise((resolve, reject) => {
+              const skip = parseInt((current - 1) * 40)
+              Message.find({roomid: id}).skip(skip).limit(40).exec((err, data) => {
+                  if (err) {
+                      global.logger.error(err)
+                      return reject()
+                  } else {
+                      message.data = data
+                      return resolve()
+                  }
+              })
+          })
+          const task2 = new Promise((resolve, reject) => {
+              Message.find({roomid: id}).count().exec((err, data) => {
+                  if (err) {
+                      global.logger.error(err)
+                      return reject()
+                  } else {
+                      message.total = data
+                      return resolve()
+                  }
+              })
+          })
+          Promise.all([task1, task2]).then(() => {
+              res.json({
+                  data: message
+              })
+          })
+      }),
+      // 机器人消息
+      app.get('/robotapi', (req, res) => {
+          const response = res
+          const info = req.query.info
+          const userid = req.query.id
+          const key = 'fde7f8d0b3c9471cbf787ea0fb0ca043'
+          superagent.post('http://www.tuling123.com/openapi/api')
+              .send({info, userid, key})
+              .end((err, res) => {
+                  if (err) {
+                      global.logger.error(err)
+                  }
+                  response.json({
+                      data: res.text
+                  })
+              })
+      })
 }

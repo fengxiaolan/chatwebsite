@@ -15,8 +15,13 @@
                     似乎在诉说着，我也可以在漆黑的角落里，找到阴影背后的阳光，
                     找到阳光与阴影奏出和谐的旋律。我要用一颗敏感赤诚的心迎接每一缕滑过指尖的阳光！
                 </mu-card-text>
-                <!--<img src="/static/img/5.jpg" style="height: 200px; width: 100%;" />-->
             </mu-card>
+            <div class="plyr">
+                <video controls loop width="100%">
+                    <source :src="videourl" type="video/mp4">
+                    您的浏览器不支持 HTML5 视频,请更换浏览器。比如 Chrome 、 Firefox 等主流浏览器。
+                </video>
+            </div>
         </div>
         <div class="acontent">
             <div class="demo-vsteper-container">
@@ -81,7 +86,8 @@
         name: "activity",
         data() {
             return {
-                activeStep: 0
+                activeStep: 0,
+                videourl: 'http://61.160.205.108/6572AB8060B4C8310129AD2BEC/030020010058955F14D6CF00000001C3D77E05-AA80-4A8B-8017-3D302C5C2AD1.mp4?ccode=050F&duration=64&expire=18000&psid=cf711da83968a3d6b3562ceaa7c77a4f&sp=&ups_client_netip=b695a103&ups_ts=1525617084&ups_userid=&utid=xU30EXRBtRsCATyrdU3Aj33u&vid=XMjM4MDgwMzYxNg%3D%3D&vkey=Bc91396d3bc332a4bef30a3325cfd4b35'
             }
         },
         components: {

@@ -2,9 +2,7 @@
     <div class="swipers">
         <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide v-for="(banner,index) in banners" :key="index">
-                <!--<a :href="banner.aurl" >-->
                     <img :src="banner.img" alt="">
-                <!--</a>-->
             </swiper-slide>
             <div class="swiper-pagination"  slot="pagination"></div>
         </swiper>
@@ -23,7 +21,7 @@
                     {img:'static/img/banner4.jpg',aurl:"http://www.baidu.com"}
                 ],
                 swiperOption: {
-                    autoplay: {stopOnLastSlide: true, delay: 4000},
+                    autoplay: {stopOnLastSlide: true, delay: 3000},
                     // disableOnInteraction: true,
                     speed: 3000,
                     initialSlide: 0,
