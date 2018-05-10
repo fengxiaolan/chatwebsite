@@ -41,8 +41,16 @@
         <mu-list-item title="重置密码" @click="renamebtn">
           <mu-icon slot="left" value="send"/>
         </mu-list-item>
+        <mu-list-item title="修改信息" @click="ainfo">
+          <mu-icon slot="left" value="send"/>
+        </mu-list-item>
       </mu-list>
     </div>
+    <template v-if="reinfo">
+      <mu-text-field  hintText="用户名" name="uname" v-model="uname" disabled/>
+      <mu-text-field  hintText="密码" name="pwd" v-model="pwd"/>
+      <mu-raised-button label="提交修改" @click="clickinfo"/>
+    </template>
 
     <div style="height:80px"></div>
   </div>
@@ -61,7 +69,10 @@
         rename: '',
         list: [],
         goodlist: [],
-        upimg: []
+        upimg: [],
+        reinfo: false,
+        uname: '',
+        pwd: ''
       }
     },
     mounted() {
@@ -70,6 +81,22 @@
       }
       this.username = getItem('userid')
       this.src = getItem('src')
+
+      this.uname = getItem('userid')
+    },
+    async created() {
+        //查看图片
+        var name = getItem('userid')
+        var data = {
+            name: name
+        }
+        const res = await this.$store.dispatch('imgInfos', data);
+
+        if (res.status === 'success') {
+            this.goodlist = res.data
+        } else {
+            console.error("没有找到");
+        }
     },
     methods: {
       logout() {
@@ -152,6 +179,26 @@
               await Alert({
                   content: res.data.data
               });
+          } else {
+              await Alert({
+                  content: res.data.data
+              });
+          }
+      },
+      ainfo() {
+        this.reinfo = !this.reinfo
+      },
+      async clickinfo(){
+        const data = {
+            name: this.uname,
+            password: this.pwd
+        }
+        const res = await this.$store.dispatch('reInfos', data);
+          if (res.status === 'success') {
+              await Alert({
+                  content: res.data.data
+              });
+              this.$router.push({path: '/login'})
           } else {
               await Alert({
                   content: res.data.data

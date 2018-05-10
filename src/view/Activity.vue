@@ -16,12 +16,14 @@
                     找到阳光与阴影奏出和谐的旋律。我要用一颗敏感赤诚的心迎接每一缕滑过指尖的阳光！
                 </mu-card-text>
             </mu-card>
-            <div class="plyr">
+
+           <!-- <div class="plyr">
                 <video controls loop width="100%">
                     <source :src="videourl" type="video/mp4">
                     您的浏览器不支持 HTML5 视频,请更换浏览器。比如 Chrome 、 Firefox 等主流浏览器。
                 </video>
-            </div>
+            </div>-->
+
         </div>
         <div class="acontent">
             <div class="demo-vsteper-container">
@@ -67,12 +69,28 @@
                     都完成啦!<a href="javascript:;" @click="reset">点这里</a>可以重置
                 </p>
             </div>
-            <div class="markactivity">
+            <div v-if="member" class="markactivity" >
                 <h2 style="color: red; font-size: 16px;">活动登记：</h2>
-                <v-distpicker @onSelected="areatext"></v-distpicker>
-                <mu-date-picker container="inline" hintText="时间选择"/><br/>
-                <mu-text-field hintText="群号"/><br/>
+                <mu-text-field hintText="活动名称" v-model="name"/><br/>
+                <v-distpicker :province="select.province" :city="select.city" :area="select.area"></v-distpicker>
+                <mu-date-picker container="inline" hintText="时间选择" v-model="timepick"/><br/>
+                <mu-text-field hintText="群号" v-model="groupno"/><br/>
                 <mu-raised-button label="确定" primary @click="actok"/>
+            </div>
+
+            <div class="activityinfo">
+                <h2 style="color: red; font-size: 16px;">活动展示：</h2>
+                <mu-list>
+                    <mu-list-item v-for="(val, idx) in actlist" :key="idx" :title="val.name">
+                        <!--<span style="color: grey; font-size: 14px;">{{val.name}}</span>&nbsp;&nbsp;-->
+                        <!--<span style="color: grey; font-size: 14px;">{{getdate(val.time)}}</span>&nbsp;&nbsp;-->
+                        <span style="color: grey; font-size: 14px;">{{val.date}}</span>&nbsp;&nbsp;
+                        <!--<span style="color: grey; font-size: 12px;">{{val.province}}-{{val.city}}-{{val.area}}</span>&nbsp;&nbsp;-->
+                        <mu-icon slot="right" value="starred" data-id="idx"  @click="applyact(val.name)"/>
+                        <!--<mu-icon slot="right" value="starred" data-id="idx"  @click="addstar"/>-->
+                        <span style="color: darkgreen; font-size: 12px;" data-id="idx">{{starnum}}</span>
+                    </mu-list-item>
+                </mu-list>
             </div>
         </div>
     </div>
@@ -81,12 +99,22 @@
 <script>
     import VDistpicker from 'v-distpicker'
     import Confirm from '../components/Confirm'
+    import Alert from '../components/Alert'
+    import dateFormat from '../utils/date'
+    import {getItem} from '../utils/localStorage'
 
     export default {
         name: "activity",
         data() {
             return {
                 activeStep: 0,
+                name: '',
+                select: {province: '四川省', city: '成都市', area: '武侯区'},
+                timepick: '',
+                groupno: '',
+                actlist: [],
+                starnum: 1,
+                member: false,
                 videourl: 'http://61.160.205.108/6572AB8060B4C8310129AD2BEC/030020010058955F14D6CF00000001C3D77E05-AA80-4A8B-8017-3D302C5C2AD1.mp4?ccode=050F&duration=64&expire=18000&psid=cf711da83968a3d6b3562ceaa7c77a4f&sp=&ups_client_netip=b695a103&ups_ts=1525617084&ups_userid=&utid=xU30EXRBtRsCATyrdU3Aj33u&vid=XMjM4MDgwMzYxNg%3D%3D&vkey=Bc91396d3bc332a4bef30a3325cfd4b35'
             }
         },
@@ -107,13 +135,32 @@
                         message = '多在群里发消息宣传宣传'
                         break
                     default:
-                        message = 'fuck! 又 TM 出错了！！！'
+                        message = '出错了！！！'
                         break
                 }
                 return message
             },
             finished () {
                 return this.activeStep > 2
+            }
+
+        },
+       async mounted() {
+            const data = {};
+            const res = await this.$store.dispatch('sActivitys', data)
+            if (res.status === 'success') {
+                this.actlist = res.data
+            } else {
+                console.error("更多活动");
+            }
+        },
+        created() {
+            var user = getItem('userid');
+            this.username = user;
+            if(user === 'admin'){
+                this.member = true
+            } else {
+                this.member = false
             }
         },
         methods: {
@@ -126,14 +173,58 @@
             reset () {
                 this.activeStep = 0
             },
-            areatext(data) {
-                console.log(data)
+            async actok() {
+                if (this.name !== '') {
+                const data = {
+                    name: this.name,
+                    province: this.select.province,
+                    city: this.select.city,
+                    area: this.select.area,
+                    groupno: this.groupno,
+                    date: this.timepick
+                }
+                console.info("233", this.timepick);
+                const res = await this.$store.dispatch('addActivity', data)
+                    if (res.status === 'success') {
+                        await Alert({
+                            content: res.data.data
+                        })
+                    } else {
+                        await Alert({
+                            content: res.data.data
+                        })
+                    }
+                } else {
+                    Alert({
+                              content: '活动名称不能为空！'
+                          })
+                }
+
             },
-            actok() {
-                Confirm({
-                    content: '提交成功'
-                })
+            getdate(time) {
+                return dateFormat(new Date(time), 'yyyy-MM-dd HH:mm:ss')
+            },
+            addstar() {
+                return this.starnum++
+            },
+            async applyact(name) {
+                var username = getItem('userid')
+                const data = {
+                    name: name,
+                    username: username
+                }
+                const res = await this.$store.dispatch('applyActs', data)
+                if (res.status === 'success') {
+                    await Alert({
+                        content: res.data.data
+                    })
+                } else {
+                    await  Alert({
+                        content: res.data.data
+                    })
+                }
             }
+
         }
     }
 </script>
@@ -164,8 +255,7 @@
     .demo-vsteper-container{
         max-width: 380px;
         max-height: 400px;
-        padding: 0 50px;
-        border-right: 1px solid #7e8c8d;
+        padding: 0 30px 0 0px;
         float: left;
     }
 
@@ -175,13 +265,21 @@
     }
 
     .markactivity {
-        padding: 0 50px;
-        /*display: inline-block;*/
+        padding: 0 40px;
         float: left;
     }
 
     .acontent {
         margin: auto;
-        padding: 0 50px;
+        padding: 0 30px;
+    }
+
+    .activityinfo{
+        padding: 0 0 0 3px;
+        float: left;
+        width: 340px;
+    }
+    .mu-list{
+        width: 100%;
     }
 </style>

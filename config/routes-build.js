@@ -207,13 +207,13 @@ module.exports = function (app) {
               if (err) {
                   console.log(err)
               }
-              if (user.length !== 0) {
-                  console.info('aa', user)
+              if(!user){
                   res.json({
-                      errno: 1,
-                      data: '已是好友'
+                      errno: 2,
+                      data: '不存在该用户'
                   })
               } else {
+                  console.info('dj', user)
                   var friend = new Friend(newfriend)
                   friend.save(function (err, friend) {
                       if (err) {
@@ -223,14 +223,20 @@ module.exports = function (app) {
                           errno: 0,
                           data: '添加好友成功'
                       })
-                      console.info('bb', friend)
                   })
               }
+              /* if (user.length !== 0) {
+                  console.info('dj1', user)
+                  res.json({
+                      errno: 1,
+                      data: '已是好友'
+                  })
+              } */
           })
       }),
 
       //查看好友6+
-      app.get('/sgoodfriend', function (req, res) {
+      app.post('/sgoodfriend', function (req, res) {
           var _user = req.body;
           var name = _user.name;
           var searchgood = {
@@ -238,6 +244,27 @@ module.exports = function (app) {
               data: {}
           }
           Friend.find({name: name},function (err, data) {
+              if (err) {
+                  console.log(err);
+              } else {
+                  searchgood.data = data
+
+                  res.json({
+                      data: searchgood
+                  })
+              }
+          })
+      }),
+
+      //查询图片
+      app.post('/imginfo', function (req, res) {
+          var _user = req.body;
+          var name = _user.name;
+          var searchgood = {
+              errno: 0,
+              data: {}
+          }
+          Message.find({roomid: 'undefined'},function (err, data) {
               if (err) {
                   console.log(err);
               } else {
@@ -265,6 +292,103 @@ module.exports = function (app) {
                   res.json({
                       errno: 0,
                       data: '重置密码成功111'
+                  })
+              }
+          })
+      }),
+
+      //修改用户信息
+      app.post('/reinfo', function (req, res){
+          var _user = req.body;
+          var name = _user.name;
+          var password = _user.password;
+          User.update({name: name}, {password: password}, function (err) {
+              if(err) {
+                  console.log(err)
+                  res.json({
+                      errno: 1,
+                      data: err
+                  })
+              } else {
+                  res.json({
+                      errno: 0,
+                      data: '修改成功，请重新登录'
+                  })
+              }
+          })
+      }),
+
+      //添加活动
+      app.post('/addactivity', function (req, res) {
+          var act = req.body;
+          var name= act.name;
+          var province = act.province,
+              city = act.city,
+              area = act.area,
+              groupno = act.groupno,
+              date = act.date;
+          Activity.find({name: name}, function (err, user) {
+              var newact = {
+                  name: name,
+                  province: province,
+                  city: city,
+                  area: area,
+                  groupno: groupno,
+                  date: date
+              }
+              if (err) {
+                  console.log(err)
+              }
+              var activity = new Activity(newact)
+              activity.save(function (err, activity) {
+                  if (err) {
+                      console.log(err)
+                  }
+                  res.json({
+                      errno: 0,
+                      data: '添加活动成功'
+                  })
+                  console.info('cc', activity)
+              })
+
+          })
+      }),
+
+      //查看活动
+      app.post('/sactivity', function (req, res) {
+          var acts = {
+              errno: 0,
+              data: {}
+          }
+          Activity.find({}, function (err, data) {
+              if (err) {
+                  console.log(err);
+              } else {
+                  acts.data = data
+
+                  res.json({
+                      data: acts
+                  })
+              }
+          })
+      }),
+
+      //查看性别
+      app.post('/sman', function (req, res) {
+          var _sex = req.body;
+          var sex = _sex.sex;
+          var man = {
+              errno: 0,
+              data: {}
+          }
+          User.find({sex: sex},function (err, data) {
+              if (err) {
+                  console.log(err);
+              } else {
+                  man.data = data
+
+                  res.json({
+                      data: man
                   })
               }
           })

@@ -4,6 +4,7 @@ import Show from '../view/Show'
 import Activity from '../view/Activity'
 import Search from '../view/Search'
 import Door from '../view/Door'
+import Member from '../view/Member'
 import Loan from '../view/Loan'
 import Robot from '../view/Robot'
 import Home from '../view/Home'
@@ -13,44 +14,45 @@ import Chat from '../view/Chat'
 import ChatHistory from '../view/ChatHistory'
 import BaseTransition from '../BaseTransition'
 import loading from '../components/loading/loading'
+import Doorindex from '../components/Doorindex'
 import Service from '../components/Service'
 import Story from '../components/Story'
 import Beatatc from '../components/Beatatc'
 import Addr from '../components/Addr'
 
 Router.prototype.goBack = function () {
-  this.isBack = true
-  window.history.go(-1)
+    this.isBack = true
+    window.history.go(-1)
 }
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
-  routes: [
-    // {
-    //   path: '/',
-    //   name: 'BaseTransition',
-    //   component: BaseTransition,
-    //   children: [
+    mode: 'history',
+    routes: [
+        // {
+        //   path: '/',
+        //   name: 'BaseTransition',
+        //   component: BaseTransition,
+        //   children: [
         {
-          path: '',
-          name: 'index',
-          component: Show
+            path: '',
+            name: 'index',
+            component: Show
         },
         {
-          path: '/loan',
-          name: 'loan',
-          component: Loan
+            path: '/loan',
+            name: 'loan',
+            component: Loan
         },
         {
-          path: '/chat',
-          name: 'chat',
-          component: Chat
+            path: '/chat',
+            name: 'chat',
+            component: Chat
         },
         {
-          path: '/chat-history',
-          name: 'chat-history',
-          component: ChatHistory
+            path: '/chat-history',
+            name: 'chat-history',
+            component: ChatHistory
         },
         {
             path: '/activity',
@@ -62,56 +64,66 @@ const router = new Router({
             name: 'search',
             component: Search
         },
-    //   ]
-    // },
-    {
-      path: '/robot',
-      name: 'Robot',
-      component: Robot
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-        path: '/door',
-        name: 'door',
-        component: Door,
-        children: [
-            {
-                path: '/service',
-                name: 'service',
-                component: Service
-            },
-            {
-                path: '/story',
-                name: 'story',
-                component: Story
-            },
-            {
-                path: '/beatatc',
-                name: 'beatatc',
-                component: Beatatc
-            },
-            {
-                path: '/addr',
-                name: 'addr',
-                component: Addr
-            }
-        ]
-    }
-  ]
+        {
+            path: '/member',
+            name: 'member',
+            component: Member
+        },
+        //   ]
+        // },
+        {
+            path: '/robot',
+            name: 'Robot',
+            component: Robot
+        },
+        {
+            path: '/home',
+            name: 'Home',
+            component: Home
+        },
+        {
+            path: '/register',
+            name: 'Register',
+            component: Register
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/doorindex',
+            name: 'door',
+            component: Door,
+            children: [
+                {
+                    path: '/doorindex',
+                    name: 'doorindex',
+                    component: Doorindex
+                },
+                {
+                    path: '/service',
+                    name: 'service',
+                    component: Service
+                },
+                {
+                    path: '/story',
+                    name: 'story',
+                    component: Story
+                },
+                {
+                    path: '/beatatc',
+                    name: 'beatatc',
+                    component: Beatatc
+                },
+                {
+                    path: '/addr',
+                    name: 'addr',
+                    component: Addr
+                }
+            ]
+        }
+    ]
 })
 
 // router.beforeEach((to, from, next) => {

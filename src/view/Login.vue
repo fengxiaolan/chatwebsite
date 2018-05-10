@@ -1,16 +1,10 @@
 <template>
   <div class="login">
-    <!--<div class="header">-->
-      <!--<mu-appbar title="Title">-->
-        <!--<mu-flat-button label="登录" slot="default"/>-->
-      <!--</mu-appbar>-->
-    <!--</div>-->
     <div class="content">
-      <h2 class="apptitle">登录</h2>
       <form action="" name="form2">
-        <mu-text-field label="帐号" labelFloat name="username"/>
+        <mu-text-field  hintText="帐号" name="username"/>
         <br/>
-        <mu-text-field label="密码" type="password" labelFloat name="password"/>
+        <mu-text-field hintText="密码"  type="password" name="password"/>
         <br/>
         <mu-checkbox label="记住密码" iconClass="checkbox" labelClass="remlabel" v-model="remmber"/>
         <br/>
@@ -51,6 +45,7 @@
           if(res.status === 'success'){
             setItem('userid', res.data.name)
             setItem('src', res.data.src)
+            setItem('sex', res.data.sex)
             await Alert({
               content: res.data.data
             })
@@ -108,7 +103,7 @@
     right: 0
     top: 0
     bottom: 0
-    background-image: url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3390114244,1903577621&fm=200&gp=0.jpg")
+    background-image: url("../assets/bg1.jpg")
     background-size: 100% 100%
     background-position: center center
     .header
@@ -116,21 +111,17 @@
       text-align: center
       .mu-flat-button-label
         font-size: 20px
-    .apptitle
-      text-align: center
-      color: #ed3f14
-      font-size: 20px
-      font-weight: 700
     .content
       width: 360px
-      height: 340px
       position: absolute
       top: 0
       left: 0
+      height: 290px;
+      background: white
       right: 0
       bottom: 0
       margin: auto
-      background: rgba(0,0,0,0.3)
+      padding: 20px
       .mu-text-field
         width: 100%
       .mu-raised-button
@@ -140,9 +131,9 @@
         margin: 0 auto
         transition: all 0.375s
       .checkbox
-        color: grey
+        color: #9e9e9e
       .remlabel
-        color: grey
+        color: #9e9e9e
         &.loading
           width: 80px
           height: 80px

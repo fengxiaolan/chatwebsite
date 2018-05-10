@@ -1,6 +1,8 @@
 <template>
     <div>
-        精彩活动
+        <div class="content">
+
+        </div>
     </div>
 </template>
 
@@ -11,5 +13,9 @@
 </script>
 
 <style scoped>
-
+    .content {
+        width: 100%;
+        height: 540px;
+        background: white;
+    }
 </style>

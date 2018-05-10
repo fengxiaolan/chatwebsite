@@ -24,58 +24,7 @@
                 <mu-avatar color="white" backgroundColor="lightgreen" :size="32">独</mu-avatar>独生子女
             </mu-chip>
         </div>
-        <!--<div class="term">-->
-            <!--<span>条件：</span>-->
-            <!--性别： <mu-dropDown-menu :value="value" @change="handleChange">-->
-                    <!--<mu-menu-item value="1" title="男"/>-->
-                    <!--<mu-menu-item value="2" title="女"/>-->
-                  <!--</mu-dropDown-menu>-->
-            <!--年龄范围：<mu-select-field v-model="age">-->
-                        <!--<mu-menu-item value="1" title="20-25"/>-->
-                        <!--<mu-menu-item value="2" title="25-30"/>-->
-                        <!--<mu-menu-item value="3" title="30-35"/>-->
-                        <!--<mu-menu-item value="4" title="35-40"/>-->
-                    <!--</mu-select-field>-->
 
-            <!--身高范围：<mu-select-field v-model="heigth">-->
-                        <!--<mu-menu-item value="1" title="150-160cm"/>-->
-                        <!--<mu-menu-item value="2" title="160-170cm"/>-->
-                        <!--<mu-menu-item value="3" title="170-180cm"/>-->
-                        <!--<mu-menu-item value="4" title="更高"/>-->
-                    <!--</mu-select-field>-->
-            <!--<br/>-->
-            <!--学历：<mu-select-field v-model="gram">-->
-                    <!--<mu-menu-item value="1" title="专科"/>-->
-                    <!--<mu-menu-item value="2" title="本科"/>-->
-                    <!--<mu-menu-item value="3" title="更高"/>-->
-                    <!--<mu-menu-item value="4" title="其他"/>-->
-                <!--</mu-select-field>-->
-
-            <!--薪资：<mu-select-field v-model="salay">-->
-                    <!--<mu-menu-item value="1" title="2000以内"/>-->
-                    <!--<mu-menu-item value="2" title="3000以内"/>-->
-                    <!--<mu-menu-item value="3" title="4000以内"/>-->
-                    <!--<mu-menu-item value="4" title="5000以内"/>-->
-                    <!--<mu-menu-item value="5" title="5000以上"/>-->
-                <!--</mu-select-field>-->
-
-            <!--出生年月：<mu-date-picker mode="landscape" hintText="请选择" /><br/>-->
-            <!--婚姻：<mu-select-field v-model="mager">-->
-                    <!--<mu-menu-item value="1" title="已婚"/>-->
-                    <!--<mu-menu-item value="2" title="未婚"/>-->
-                    <!--<mu-menu-item value="3" title="离异"/>-->
-                <!--</mu-select-field>-->
-            <!--<br/>-->
-            <!--更多：<mu-select-field v-model="other" multiple label="其他（可多选）">-->
-                    <!--<mu-menu-item value="1" title="魅力"/>-->
-                    <!--<mu-menu-item value="2" title="高收入"/>-->
-                    <!--<mu-menu-item value="3" title="高学历"/>-->
-                    <!--<mu-menu-item value="4" title="有车"/>-->
-                    <!--<mu-menu-item value="5" title="有房"/>-->
-                    <!--<mu-menu-item value="6" title="国家单位"/>-->
-                <!--</mu-select-field>-->
-            <!--<br/>-->
-        <!--</div>-->
         <div class="searchbox">
             <mu-auto-complete hintText="按昵称搜索"
                               @input="handleInput"
@@ -89,6 +38,7 @@
             <mu-list>
                 <mu-list-item v-for="(val, index) in searchsource" :key="index" title="">
                     <mu-avatar color="white" :src="val.src" backgroundColor="lightgreen" :size="32" @click="chatwindow(val.name)"></mu-avatar>&nbsp;&nbsp; {{val.name}}
+                    &nbsp;&nbsp;{{val.age}}岁&nbsp;&nbsp; {{val.sex}}
                     <mu-icon slot="right" value="info" @click="addfriend(val.name)"/>
                 </mu-list-item>
             </mu-list>
@@ -213,11 +163,11 @@
                 const res = await this.$store.dispatch('addFriends', data);
                 if (res.status === 'success') {
                     await Alert({
-                        content: '添加成功'
+                        content: res.data.data
                     })
                 } else {
                     await  Alert({
-                        content: '已是好友'
+                        content: res.data.data
                     })
                 }
             }

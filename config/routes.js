@@ -1,5 +1,7 @@
 const User = require('../models/user')
 var Friend = require('../models/friend')
+var Activity = require('../models/activity')
+var Actuser = require('../models/actuser')
 const Message = require('../models/message')
 const superagent = require('superagent')
 const fs = require('fs')
@@ -87,7 +89,6 @@ module.exports =  (app) => {
   // 注册
   app.post('/user/signup',  (req, res) => {
     const _user = req.body
-    // console.log(_user)
     User.findOne({name: _user.name},  (err, user) => {
       if (err) {
         global.logger.error(err)
@@ -138,7 +139,8 @@ module.exports =  (app) => {
                 errno: 0,
                 data: '登录成功',
                 name: name,
-                src: user.src
+                src: user.src,
+                sex: user.sex
               })
             } else {
               res.json({
@@ -206,23 +208,25 @@ module.exports =  (app) => {
       var _user = req.body;
       var name= _user.name;
       var newname = _user.newname;
-      Friend.find({name: name}, function (err, user) {
-          var newfriend = {
-              name: name,
-              newname: newname
-          }
+
+      var newfriend = {
+          name: name,
+          newname: newname
+      }
+      Friend.find({name: name}, function (err, friend) {
+
           if (err) {
               console.log(err)
           }
-          if (user.length !== 0) {
-              console.info('aa', user)
+          console.info('friend', friend)
+          if(friend){
               res.json({
                   errno: 1,
                   data: '已是好友'
               })
           } else {
-              var friend = new Friend(newfriend)
-              friend.save(function (err, friend) {
+              friend = new Friend(newfriend)
+              friend.save((err, friend) => {
                   if (err) {
                       console.log(err)
                   }
@@ -230,14 +234,13 @@ module.exports =  (app) => {
                       errno: 0,
                       data: '添加好友成功'
                   })
-                  console.info('bb', friend)
               })
           }
       })
   }),
 
   //查看好友6+
-  app.get('/sgoodfriend', function (req, res) {
+  app.post('/sgoodfriend', function (req, res) {
       var _user = req.body;
       var name = _user.name;
       var searchgood = {
@@ -245,6 +248,27 @@ module.exports =  (app) => {
           data: {}
       }
       Friend.find({name: name},function (err, data) {
+          if (err) {
+              console.log(err);
+          } else {
+              searchgood.data = data
+
+              res.json({
+                  data: searchgood
+              })
+          }
+      })
+  }),
+
+  //查询图片
+  app.post('/imginfo', function (req, res) {
+      var _user = req.body;
+      var name = _user.name;
+      var searchgood = {
+          errno: 0,
+          data: {}
+      }
+      Message.find({roomid: 'undefined'},function (err, data) {
           if (err) {
               console.log(err);
           } else {
@@ -277,6 +301,160 @@ module.exports =  (app) => {
     })
   }),
 
+  //修改用户信息
+  app.post('/reinfo', function (req, res){
+        var _user = req.body;
+        var name = _user.name;
+        var password = _user.password;
+        User.update({name: name}, {password: password}, function (err) {
+            if(err) {
+                console.log(err)
+                res.json({
+                    errno: 1,
+                    data: err
+                })
+            } else {
+                res.json({
+                    errno: 0,
+                    data: '修改成功，请重新登录'
+                })
+            }
+        })
+    }),
+
+  //添加活动
+  app.post('/addactivity', function (req, res) {
+      var act = req.body;
+      var name= act.name;
+      var province = act.province,
+          city = act.city,
+          area = act.area,
+          groupno = act.groupno,
+          date = act.date;
+      Activity.find({name: name}, function (err, activity) {
+          var newact = {
+              name: name,
+              province: province,
+              city: city,
+              area: area,
+              groupno: groupno,
+              date: date
+          }
+          if (err) {
+              console.log(err)
+          }
+          if(activity){
+              res.json({
+                  errno: 1,
+                  data: '已申请加入'
+              })
+          } else {
+              activity = new Activity(newact)
+              activity.save(function (err, activity) {
+                  if (err) {
+                      console.log(err)
+                  }
+                  res.json({
+                      errno: 0,
+                      data: '添加活动成功'
+                  })
+              })
+          }
+      })
+  }),
+
+  //查看活动
+  app.post('/sactivity', function (req, res) {
+      var acts = {
+          errno: 0,
+          data: {}
+      }
+      Activity.find({}, function (err, data) {
+          if (err) {
+              console.log(err);
+          } else {
+              acts.data = data
+
+              res.json({
+                  data: acts
+              })
+          }
+      })
+  }),
+
+  //申请加入活动
+  app.post('/applyact', function (req, res) {
+      var act = req.body;
+      var name= act.name;
+      var username= act.username;
+      Actuser.find({}, function (err, actuser) {
+          var newact = {
+              name: name,
+              username: username
+          }
+          if (err) {
+              console.log(err)
+          }
+          if(actuser){
+              res.json({
+                  errno: 1,
+                  data: '已申请加入'
+              })
+          } else {
+              actuser = new Actuser(newact)
+              actuser.save(function (err, act) {
+                  if (err) {
+                      console.log(err)
+                  }
+                  res.json({
+                      errno: 0,
+                      data: '申请活动成功'
+                  })
+              })
+          }
+      })
+  }),
+
+  //查看加入活动用户
+  app.post('/sapply', function (req, res) {
+      var acts = {
+          errno: 0,
+          data: {}
+      }
+      Actuser.find({}, function (err, data) {
+          if (err) {
+              console.log(err);
+          } else {
+              acts.data = data
+
+              res.json({
+                  data: acts
+              })
+          }
+      })
+  }),
+
+  //查看性别
+  app.post('/sman', function (req, res) {
+      var _sex = req.body;
+      var sex = _sex.sex;
+      var man = {
+          errno: 0,
+          data: {}
+      }
+      User.find({sex: sex},function (err, data) {
+          if (err) {
+              console.log(err);
+          } else {
+              man.data = data
+
+              res.json({
+                  data: man
+              })
+          }
+      })
+  }),
+
   // 信息
   app.get('/message', (req, res) => {
     const id = req.query.roomid
@@ -291,6 +469,7 @@ module.exports =  (app) => {
       }
     })
   }),
+
   // 获取历史记录
   app.get('/history/message', (req, res) => {
     const id = req.query.roomid
@@ -336,6 +515,7 @@ module.exports =  (app) => {
       })
     })
   }),
+
   // 机器人消息
   app.get('/robotapi', (req, res) => {
     const response = res

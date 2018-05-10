@@ -9,9 +9,12 @@
             <ul class="showimg">
                 <li v-for="(val, idx) in list" :key="idx">
                     <img :src="val.image"/>
-                    <div class="titlebar" @click="chatwindow(val.author)">
+                    <div class="titlebar" >
                         <span style="color: white; font-size: 16px; ">{{val.title}}</span><br/>
                         <span style="color: white; font-size: 13px;">{{val.author}}</span>
+                        <p style="width: 50px; height: 20px; background: red; position: absolute; right: 10px;right: 10px;cursor: pointer;
+                               bottom: 15px;color: white;text-align: center;font-size: 12px;line-height: 20px;border-radius: 1px 15px 15px 1px;"
+                           @click="chatwindow(val.author)">打招呼</p>
                     </div>
                 </li>
             </ul>
@@ -30,6 +33,18 @@
                     <mu-badge content="news" secondary slot="after"/>
                 </mu-menu-item>
             </mu-menu>
+
+            <div class="prolove">
+                <h2 style="font-size: 14px; color: white; background: #f00; text-align: center; width: 100px; display: inline-block;">推荐情缘</h2>
+                <h2 style="font-size: 14px; color: grey;  text-align: center; width: 100px; display: inline-block;"  @click="ssex">换一批</h2>
+
+                <ul class="show">
+                    <li v-for="(val, idx) in lovelist" :key="idx">
+                        <img :src="val.src" style="width: 70px; height: 70px; border-radius: 50%;"/><br>
+                        <span style="color: grey; font-size: 16px;">{{val.name}}</span>
+                    </li>
+                </ul>
+            </div>
             <div class="litimg">
                 <img src="static/img/b1.jpg" alt=""/>
                 <img src="static/img/b2.jpg" alt=""/>
@@ -46,7 +61,7 @@
         </div>
         <!--侧边栏固定扫码-->
         <div class="asides" @mouseover="overShow" @mouseleave="overhide">
-            点我咨询
+            扫我咨询
             <div :class="{erma: showerma}"></div>
         </div>
 
@@ -65,7 +80,40 @@
         data () {
             return {
                 src: '',
+                sex: '',
                 showerma: false,
+                lovelist: [
+                    {
+                        age: 24,
+                        name: 'alicke',
+                        src: '/static/img/a20.jpg'
+                    },
+                    {
+                        age: 24,
+                        name: 'fdagg',
+                        src: '/static/img/a18.jpg'
+                    },
+                    {
+                        age: 24,
+                        name: 'yrewtre',
+                        src: '/static/img/a28.jpg'
+                    },
+                    {
+                        age: 24,
+                        name: 'feryy',
+                        src: '/static/img/a26.jpg'
+                    },
+                    {
+                        age: 24,
+                        name: 'dfre',
+                        src: '/static/img/a21.jpg'
+                    },
+                    {
+                        age: 24,
+                        name: 'retr',
+                        src: '/static/img/a22.jpg'
+                    }
+                ],
                 list: [{
                     image: './static/img/a1.jpg',
                     title: '快来撩我啊！',
@@ -164,7 +212,6 @@
             //     this.$store.commit('setTab', true)
             // }
             this.$store.commit('setTab', true)
-
             this.src = getItem('src')
         },
         created() {
@@ -188,6 +235,24 @@
             },
             tomy() {
                 this.$router.push({path: '/home'})
+            },
+            async ssex() {
+                //查看性别
+                this.sex = getItem('sex')
+                if(this.sex === '男'){
+                    this.sex = '女'
+                } else {
+                    this.sex = '男'
+                }
+                const data = {
+                    sex : this.sex
+                }
+                const res = await this.$store.dispatch('sMan', data);
+                if (res.status === 'success') {
+                    this.lovelist = res.data
+                } else {
+                    console.error("你可能喜欢");
+                }
             }
         },
         computed: {
@@ -277,20 +342,36 @@
         position: fixed;
         right: 10px;
         bottom: 100px;
-        background: red;
+        background: #e2544c;
         color: white;
         width: 20px;
         height: 80px;
         text-align: center;
     }
-
+    /*鼠标移动才显示*/
     .erma{
         width: 100px;
         height: 100px;
         position: fixed;
         right: 20px;
         bottom: 100px;
-        background: yellow;
+        background-image: url("../assets/erma.jpg");
+        background-size: 100% 100%;
+        background-position : center center;
     }
 
+    .prolove {
+        height: 100px;
+    }
+
+    .show {
+        height: 100px;
+        width: 100%;
+    }
+
+    .show li {
+        float: left;
+        margin: 10px 10px;
+        text-align: center;
+    }
 </style>

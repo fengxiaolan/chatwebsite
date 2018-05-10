@@ -1,7 +1,7 @@
 <template>
     <div class="item">
         <div class="name">
-            <span v-if="mytime">{{getdate}}</span>&nbsp;{{location}}&nbsp;{{name}}
+            <span v-if="mytime">{{getdate}}</span>&nbsp;&nbsp;{{name}}
         </div>
         <img :src="head" alt="" class="head">
         <div v-if="img">

@@ -1,24 +1,24 @@
 <template>
   <div class="register">
     <div class="content">
-      <h2 class="apptitle">注册</h2>
       <form action="" name="form1">
-        <mu-text-field label="帐号" labelFloat name="username"/>
+        <mu-text-field hintText="帐号" name="username"/>
         <br/>
-        <mu-text-field label="密码" type="password" labelFloat name="password"/>
+        <mu-text-field hintText="密码" type="password" name="password"/>
         <br/>
-
-        <mu-radio label="男" name="sexgroup" v-model="sexval"/>
-        <mu-radio label="女" name="sexgroup" v-model="sexval"/><br/>
 
         <mu-text-field hintText="年龄" v-model="ageval"/><br/>
+        <mu-text-field hintText="薪资信息" v-model="salaryval"/><br/>
 
-        <mu-radio label="未婚" name="margroup" v-model="marval"/>
-        <mu-radio label="离异" name="margroup" v-model="marval"/>
-        <mu-radio label="丧偶" name="margroup" v-model="marval"/><br/>
+        <mu-radio label="男" name="sexgroup" nativeValue="男" v-model="sexval" />
+        <mu-radio label="女" name="sexgroup" nativeValue="女" v-model="sexval" /><br/>
 
-        <mu-checkbox v-model="loveval" label="旅游"/>
-        <mu-checkbox v-model="loveval" label="看书"/> <br/>
+        <mu-radio label="未婚" nativeValue="未婚" name="margroup" v-model="marval"/>
+        <mu-radio label="离异" nativeValue="离异" name="margroup" v-model="marval"/>
+        <mu-radio label="丧偶" nativeValue="丧偶" name="margroup" v-model="marval"/><br/>
+
+        <mu-checkbox name="check" nativeValue="旅游" label="旅游" v-model="loveval"/>
+        <mu-checkbox name="check" nativeValue="看书" label="看书" v-model="loveval"/> <br/>
         <div class="btn-radius" @click="submit">注册</div>
       </form>
       <div @click="login" class="tip-user">
@@ -38,7 +38,8 @@
             sexval: '',
             marval: '',
             ageval: '',
-            loveval: ''
+            salaryval: '',
+            loveval: []
         }
     },
     methods: {
@@ -58,16 +59,17 @@
             sex: this.sexval,
             marry: this.marval,
             age: this.ageval,
-            love: this.loveval
+            love: this.loveval,
+            salary:this.salary
           }
           const res = await this.$store.dispatch('registerSubmit', data)
           if (res.status === 'success') {
-            await Alert({
+              await Alert({
               content: res.data.data
             })
             this.$router.push({path: '/login'})
           } else {
-            await Alert({
+              await Alert({
               content: res.data.data
             })
           }
@@ -101,60 +103,42 @@
     width: 100%
     height: 40px
     margin-top: 30px
-    border : 1px solid rgba(255, 255, 255, 0.38)
-    background: rgba(255,255,255 ,0.02)
-    color: #ff0;
+    border : 1px solid #9e9e9e
+    background: rgba(255,255,255 ,0.1)
     line-height: 40px
     text-align : center
     border-radius: 5px
+    color: #e45038
   .header
     .mu-appbar
       background-color: transparent
   .content
     margin: auto
-    .mu-text-field-input
-      color: #fff
-    .mu-text-field.has-label .mu-text-field-label.float
-      color: rgba(255, 255, 255, 0.38)
-    .mu-text-field-label
-      color: #fff
-    .mu-text-field-line
-      background-color: rgba(255, 255, 255, 0.38)
-    .mu-text-field-focus-line
-      background-color: #fff
     .tip-user
       width:100%
       text-align: center
       margin-top 20px
-      color:#fff
+      color:#9e9e9e
+      cursor: pointer
   .register
     position: absolute
     left: 0
     right: 0
     top: 0
     bottom: 0
-    background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525627687296&di=7f236928e8caeadafb2db057e250e405&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F151026%2F14-151026104155V0.jpg")
+    background-image: url("../assets/bg2.jpg")
     background-size: 100% 100%
     background-position : center center
     .mu-appbar
       text-align: center
       .mu-flat-button-label
         font-size: 20px
-    .apptitle
-      text-align: center
-      color: #ed3f14
-      font-size: 20px
-      font-weight: 700
     .content
       width: 360px
       height: 320px
       position: absolute
-      left: 0
-      top: 0
-      right: 0
-      bottom: 0
-      margin: auto
-      background: rgba(0,0,0,0.3)
+      left: 100px
+      top: 50px
       .mu-text-field
         width: 100%
 </style>
