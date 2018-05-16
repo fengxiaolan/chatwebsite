@@ -220,9 +220,6 @@
             }
         },
         methods: {
-            // tosearch: function () {
-            //    this.$router.push({path: '/search'})
-            // },
             chatwindow(roomID) {
                 this.$store.commit('setTab', false)
                 this.$router.push({path: '/chat', query: {roomId: roomID}})

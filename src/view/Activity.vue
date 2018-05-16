@@ -87,8 +87,8 @@
                         <span style="color: grey; font-size: 14px;">{{val.date}}</span>&nbsp;&nbsp;
                         <!--<span style="color: grey; font-size: 12px;">{{val.province}}-{{val.city}}-{{val.area}}</span>&nbsp;&nbsp;-->
                         <mu-icon slot="right" value="starred" data-id="idx"  @click="applyact(val.name)"/>
-                        <!--<mu-icon slot="right" value="starred" data-id="idx"  @click="addstar"/>-->
-                        <span style="color: darkgreen; font-size: 12px;" data-id="idx">{{starnum}}</span>
+                        <!--<mu-icon slot="right" value="starred" data-id="idx"  @click="addstar(idx)"/>-->
+                        <span style="color: darkgreen; font-size: 12px;" data-id="idx">{{actlist[idx].starnum?actlist[idx].starnum:0}}</span>
                     </mu-list-item>
                 </mu-list>
             </div>
@@ -183,12 +183,12 @@
                     groupno: this.groupno,
                     date: this.timepick
                 }
-                console.info("233", this.timepick);
                 const res = await this.$store.dispatch('addActivity', data)
                     if (res.status === 'success') {
                         await Alert({
                             content: res.data.data
                         })
+                        window.location.reload()
                     } else {
                         await Alert({
                             content: res.data.data
@@ -196,16 +196,22 @@
                     }
                 } else {
                     Alert({
-                              content: '活动名称不能为空！'
-                          })
+                        content: '活动名称不能为空！'
+                    })
                 }
 
             },
             getdate(time) {
                 return dateFormat(new Date(time), 'yyyy-MM-dd HH:mm:ss')
             },
-            addstar() {
-                return this.starnum++
+            addstar(index) {
+                let data = this.actlist[index]
+                if(data.starnum){
+                    data.starnum = data.starnum + 1
+                }else{
+                    data.starnum = 1
+                }
+                this.actlist.splice(index,1,data)
             },
             async applyact(name) {
                 var username = getItem('userid')

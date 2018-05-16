@@ -51,7 +51,10 @@
       <mu-text-field  hintText="密码" name="pwd" v-model="pwd"/>
       <mu-raised-button label="提交修改" @click="clickinfo"/>
     </template>
-
+    <vue-particles
+            color="#dedede"
+    >
+    </vue-particles>
     <div style="height:80px"></div>
   </div>
 </template>

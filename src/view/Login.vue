@@ -2,7 +2,7 @@
   <div class="login">
     <div class="content">
       <form action="" name="form2">
-        <mu-text-field  hintText="帐号" name="username"/>
+        <mu-text-field  hintText="帐号" name="username" />
         <br/>
         <mu-text-field hintText="密码"  type="password" name="password"/>
         <br/>
@@ -12,6 +12,10 @@
       </form>
       <div @click="register" class="tip-user">注册帐号</div>
     </div>
+    <vue-particles
+            color="#f00"
+    >
+    </vue-particles>
   </div>
 </template>
 
@@ -34,6 +38,7 @@
       async submit() {
         const name = document.form2.username.value.trim()
         const password = document.form2.password.value.trim()
+        var reg = /^[\u4e00-\u9fff\\w]{3,16}$/ig;
         if (name !== '' && password !== '') {
           const data = {
             name: name,

@@ -6,7 +6,7 @@ var ActivitySchema = new mongoose.Schema({
     city: String,
     area: String,
     groupno: String,
-    date: Date,
+    date: String,
     time: {
         type: Date,
         default: Date.now()

@@ -37,7 +37,7 @@
     }
     .toplogo {
         font-size: 16px;
-        line-height: 36px;
+        line-height: 28px;
         float: left;
         color: red;
         text-shadow: 1px 2px #ec7f7f;

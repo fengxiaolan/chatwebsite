@@ -204,19 +204,6 @@ const store = new Vuex.Store({
                 data: res.data
             }
         },
-        async addActivity({commit}, data) {
-            const res = await url.addAct(data)
-            if (res.data.errno === 0) {
-                return {
-                    status: 'success',
-                    data: res.data
-                }
-            }
-            return {
-                status: 'fail',
-                data: res.data
-            }
-        },
         async sMan({commit}, data) {
             const res = await url.sman(data)
             if (res.data.data.errno === 0) {
@@ -254,6 +241,19 @@ const store = new Vuex.Store({
             return {
                 status: 'fail',
                 data: res.data.data.data
+            }
+        },
+        async addActivity({commit}, data) {
+            const res = await url.addAct(data)
+            if (res.data.errno === 0) {
+                return {
+                    status: 'success',
+                    data: res.data
+                }
+            }
+            return {
+                status: 'fail',
+                data: res.data
             }
         },
         async sActivitys({commit}, data) {

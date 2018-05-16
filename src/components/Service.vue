@@ -72,6 +72,7 @@
     .content {
         width: 100%;
         height: 540px;
-        background: white;
+        background-image: url("../assets/bg5.jpg");
+        background-size: 100% 100%;
     }
 </style>

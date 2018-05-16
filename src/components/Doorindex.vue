@@ -32,7 +32,7 @@
         background: #fff;
         position: absolute;
         left: 50%;
-        margin-left: -100px;
+        margin-left: -150px;
         bottom: 100px;
     }
     .speak {

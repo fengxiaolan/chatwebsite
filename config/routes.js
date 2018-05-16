@@ -209,12 +209,11 @@ module.exports =  (app) => {
       var name= _user.name;
       var newname = _user.newname;
 
-      var newfriend = {
-          name: name,
-          newname: newname
-      }
-      Friend.find({name: name}, function (err, friend) {
-
+      Friend.findOne({name: name, newname: newname}, function (err, friend) {
+          var newfriend = {
+              name: name,
+              newname: newname
+          }
           if (err) {
               console.log(err)
           }
@@ -331,7 +330,7 @@ module.exports =  (app) => {
           area = act.area,
           groupno = act.groupno,
           date = act.date;
-      Activity.find({name: name}, function (err, activity) {
+      Activity.findOne({name: ''}, function (err, activity) {
           var newact = {
               name: name,
               province: province,
@@ -343,10 +342,11 @@ module.exports =  (app) => {
           if (err) {
               console.log(err)
           }
+          console.info('activity', activity)
           if(activity){
               res.json({
                   errno: 1,
-                  data: '已申请加入'
+                  data: '已添加此活动'
               })
           } else {
               activity = new Activity(newact)
@@ -382,12 +382,12 @@ module.exports =  (app) => {
       })
   }),
 
-  //申请加入活动
+  //申请加入活动用户
   app.post('/applyact', function (req, res) {
       var act = req.body;
       var name= act.name;
       var username= act.username;
-      Actuser.find({}, function (err, actuser) {
+      Actuser.findOne({name: ''}, function (err, actuser) {
           var newact = {
               name: name,
               username: username
@@ -395,6 +395,7 @@ module.exports =  (app) => {
           if (err) {
               console.log(err)
           }
+          console.info('actuser', actuser)
           if(actuser){
               res.json({
                   errno: 1,

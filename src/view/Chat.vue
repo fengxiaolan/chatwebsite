@@ -51,6 +51,9 @@
       <div class="emojs" v-show="isemoj">
         <ul>
           <li @click="insertText(item)" v-for="item of emojis">{{item}}</li>
+          <!--<li  v-for="(item, index) in emojiList" @click="insertText(item)">-->
+            <!--<i :class="'iconfont '+item" :key="index" ></i>-->
+          <!--</li>-->
         </ul>
       </div>
     </div>
@@ -65,8 +68,9 @@
   import { getItem } from '../utils/localStorage'
   import loading from '../components/loading/loading'
   import Alert from '../components/Alert'
-
+  import '../utils/emoji/iconfont.css'
   // import io from 'socket.io-client'
+
   export default{
     data() {
       return {
@@ -80,7 +84,21 @@
             '😜', '😎', '😊', '😳', '😱', '😒', '😔', '😷', '👿', '😩',
             '😤', '😣', '😰', '😭', '👻', '🙏','👍', '✌️', '👉', '👀', '🐶',
             '🐷', '😹', '⚡️', '🔥', '🌈', '🍏', '⚽️', '❤️', '🇨🇳', '♬',
-            '☂', '☀', '♨', '㊨', '㊧', '㊥', '㊤', '㊦', '☚', '☎', '✘']
+            '☂', '☀', '♨', '㊨', '㊧', '㊥', '㊤', '㊦', '☚', '☎', '✘'],
+        emojiList: [
+            'icon-icon_emoji',
+            'icon-_ico_emoji',
+            'icon-emoji_line',
+            'icon-emoji_line1',
+            'icon-emoji_line2',
+            'icon-emoji_line3',
+            'icon-emoji_line4',
+            'icon-emoji_line5',
+            'icon-emoji_line6',
+            'icon-emoji_line7',
+            'icon-emoji_line8',
+            'icon-emoji_line9',
+        ]
       }
     },
     created() {
