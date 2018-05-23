@@ -140,7 +140,8 @@ module.exports =  (app) => {
                 data: '登录成功',
                 name: name,
                 src: user.src,
-                sex: user.sex
+                sex: user.sex,
+                age: user.age
               })
             } else {
               res.json({
@@ -430,6 +431,30 @@ module.exports =  (app) => {
 
               res.json({
                   data: acts
+              })
+          }
+      })
+  }),
+
+  //查看年龄相近的用户
+  app.post('/sage', function (req, res) {
+      var info = req.body;
+      var sex = info.sex;
+      var age = info.age;
+      var agel = age - 5;
+      var ageg = age + 5;
+      var ages = {
+          errno: 0,
+          data: {}
+      }
+      User.find({sex: sex, age: {$lte: ageg, $gte: agel}}, function (err, data) {
+          if (err) {
+              console.log(err);
+          } else {
+              ages.data = data
+
+              res.json({
+                  data: ages
               })
           }
       })

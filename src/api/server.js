@@ -42,7 +42,9 @@ const Service = {
   //申请活动
   applyAct: data => Axios.post('/applyact', data),
   //查询申请活动用户
-  sApply: data => Axios.post('/sapply',data)
+  sApply: data => Axios.post('/sapply',data),
+  //查询年龄
+  sAge: data => Axios.post('/sage',data)
 }
 
 export default Service

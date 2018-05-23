@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div >
         <div class="wrap">
             <Swiper></Swiper>
@@ -36,7 +36,7 @@
 
             <div class="prolove">
                 <h2 style="font-size: 14px; color: white; background: #f00; text-align: center; width: 100px; display: inline-block;">推荐情缘</h2>
-                <h2 style="font-size: 14px; color: grey;  text-align: center; width: 100px; display: inline-block;"  @click="ssex">换一批</h2>
+                <h2 style="font-size: 14px; color: grey;  text-align: center; width: 100px; display: inline-block; cursor: pointer;"  @click="ssex">换一批</h2>
 
                 <ul class="show">
                     <li v-for="(val, idx) in lovelist" :key="idx" @click="chatwindow(val.name)">
@@ -80,6 +80,7 @@
             return {
                 src: '',
                 sex: '',
+                age: '',
                 showerma: false,
                 lovelist: [
                     {
@@ -200,22 +201,22 @@
             Swiper
         },
         mounted () {
-            // const uerId = getItem('userid')
-            // if (!uerId) {
-            //      Confirm({
-            //         title: '提示',
-            //         content: '请先登录'
-            //     })
-            //     this.$router.push({ path: 'login' })
-            // } else {
-            //     this.$store.commit('setTab', true)
-            // }
-            this.$store.commit('setTab', true)
+            const uerId = getItem('userid')
             this.src = getItem('src')
+            if (!uerId) {
+                Confirm({
+                    title: '提示',
+                    content: '请先登录'
+                })
+                this.$router.push({ path: 'login' })
+            } else {
+                this.$store.commit('setTab', true)
+            }
+
         },
         created() {
             if (!this.getSocket) {
-                this.$store.commit('setGetSocket', io.connect('localhost:9090/'))
+                this.$store.commit('setGetSocket', io.connect('http://172.16.0.68:9090/'))
             }
         },
         methods: {
@@ -233,7 +234,7 @@
                 this.$router.push({path: '/home'})
             },
             async ssex() {
-                //查看性别
+                /*//查看性别
                 this.sex = getItem('sex')
                 if(this.sex === '男'){
                     this.sex = '女'
@@ -244,6 +245,23 @@
                     sex : this.sex
                 }
                 const res = await this.$store.dispatch('sMan', data);
+                if (res.status === 'success') {
+                    this.lovelist = res.data
+                } else {
+                    console.error("你可能喜欢");
+                }*/
+                this.sex = getItem('sex')
+                this.age = getItem('age')
+                if(this.sex === '男'){
+                    this.sex = '女'
+                } else {
+                    this.sex = '男'
+                }
+                const data = {
+                    sex : this.sex,
+                    age : this.age
+                }
+                const res = await this.$store.dispatch('sAges', data);
                 if (res.status === 'success') {
                     this.lovelist = res.data
                 } else {
@@ -272,8 +290,8 @@
     }
    .containright {
        float: right;
-       width: 20%;
-       margin-left: 5px;
+       width: 22%;
+       margin-left: 3px;
        padding-top: 25px;
    }
    .litimg img {
@@ -282,7 +300,7 @@
    }
 
     .gridlist-container{
-        width: 78%;
+        width: 77%;
         float: left;
     }
 
@@ -357,11 +375,11 @@
     }
 
     .prolove {
-        height: 100px;
+        height: 250px;
     }
 
     .show {
-        height: 100px;
+        height: 250px;
         overflow-y: auto;
         width: 100%;
     }

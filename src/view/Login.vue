@@ -51,6 +51,7 @@
             setItem('userid', res.data.name)
             setItem('src', res.data.src)
             setItem('sex', res.data.sex)
+            setItem('age', res.data.age)
             await Alert({
               content: res.data.data
             })

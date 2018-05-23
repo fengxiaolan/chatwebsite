@@ -28,6 +28,7 @@ var UserSchema = new mongoose.Schema({
 }, {
     versionKey: false
 });
+
 //对密码进行加密
 UserSchema.pre('save', function (next) {
   var user = this
@@ -48,6 +49,7 @@ UserSchema.pre('save', function (next) {
     })
   })
 })
+
 //用于比较密码是否正确
 UserSchema.methods = {
   comparePassword: function (_password, cb) {

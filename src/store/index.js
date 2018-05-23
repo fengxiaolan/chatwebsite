@@ -295,6 +295,19 @@ const store = new Vuex.Store({
                 data: res.data.data.data
             }
         },
+        async sAges({commit}, data) {
+            const res = await url.sAge(data)
+            if (res.data.data.errno === 0) {
+                return {
+                    status: 'success',
+                    data: res.data.data.data
+                }
+            }
+            return {
+                status: 'fail',
+                data: res.data.data.data
+            }
+        },
     }
 })
 export default store
