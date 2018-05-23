@@ -82,13 +82,10 @@
                 <h2 style="color: red; font-size: 16px;">活动展示：</h2>
                 <mu-list>
                     <mu-list-item v-for="(val, idx) in actlist" :key="idx" :title="val.name">
-                        <!--<span style="color: grey; font-size: 14px;">{{val.name}}</span>&nbsp;&nbsp;-->
-                        <!--<span style="color: grey; font-size: 14px;">{{getdate(val.time)}}</span>&nbsp;&nbsp;-->
                         <span style="color: grey; font-size: 14px;">{{val.date}}</span>&nbsp;&nbsp;
-                        <!--<span style="color: grey; font-size: 12px;">{{val.province}}-{{val.city}}-{{val.area}}</span>&nbsp;&nbsp;-->
-                        <mu-icon slot="right" value="starred" data-id="idx"  @click="applyact(val.name)"/>
-                        <!--<mu-icon slot="right" value="starred" data-id="idx"  @click="addstar(idx)"/>-->
-                        <span style="color: darkgreen; font-size: 12px;" data-id="idx">{{actlist[idx].starnum?actlist[idx].starnum:0}}</span>
+                        <span style="color: darkgreen; font-size: 12px;" data-id="idx">{{actlist[idx].starnum?actlist[idx].starnum:1}}</span>
+                        <div style="position:absolute; right: 10px; top: 26px;background: lightblue;border-radius: 3px;color: white;padding: 0 3px;  cursor: pointer;"  @click="applyact(val.name)">申请加入</div>
+                        <div style="position:absolute; right: 78px; top: 26px;background: pink;border-radius: 10px 10px 0 0;color: white;padding: 0 3px; cursor: pointer;"  @click="addstar(idx)">点赞</div>
                     </mu-list-item>
                 </mu-list>
             </div>

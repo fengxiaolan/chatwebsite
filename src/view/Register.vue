@@ -25,6 +25,10 @@
         我已有帐号
       </div>
     </div>
+    <vue-particles
+            color="#0ff"
+    >
+    </vue-particles>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
             <mu-list-item v-for="(val, idx) in memlist" :key="idx">
                 <mu-avatar :src="val.src" slot="leftAvatar"/>&nbsp;&nbsp;{{val.name}}&nbsp;&nbsp;{{val.sex}}&nbsp;&nbsp;{{val.age}}
                 &nbsp;&nbsp;{{val.marry}} &nbsp;&nbsp;{{val.love}}
-                <mu-icon slot="right" value="info" @click="remove(val.name)"/>
+                <div style="position: absolute; right: 10px; top: 28px; color: red; font-size: 13px;" @click="remove(val.name)">删除</div>
             </mu-list-item>
         </mu-list>
         <mu-list>
@@ -15,7 +15,7 @@
             <mu-list-item v-for="(val, idx) in wmemlist" :key="idx">
                 <mu-avatar :src="val.src" slot="leftAvatar"/>&nbsp;&nbsp;{{val.name}}&nbsp;&nbsp;{{val.sex}}&nbsp;&nbsp;{{val.age}}
                 &nbsp;&nbsp;{{val.marry}} &nbsp;&nbsp;{{val.love}}
-                <mu-icon slot="right" value="info" @click="remove(val.name)"/>
+                <div style="position: absolute; right: 10px; top: 26px; color: red; font-size: 12px;" @click="remove(val.name)">删除</div>
             </mu-list-item>
         </mu-list>
         </div>

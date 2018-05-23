@@ -39,7 +39,7 @@
                 <h2 style="font-size: 14px; color: grey;  text-align: center; width: 100px; display: inline-block;"  @click="ssex">换一批</h2>
 
                 <ul class="show">
-                    <li v-for="(val, idx) in lovelist" :key="idx">
+                    <li v-for="(val, idx) in lovelist" :key="idx" @click="chatwindow(val.name)">
                         <img :src="val.src" style="width: 70px; height: 70px; border-radius: 50%;"/><br>
                         <span style="color: grey; font-size: 16px;">{{val.name}}</span>
                     </li>
@@ -64,7 +64,6 @@
             扫我咨询
             <div :class="{erma: showerma}"></div>
         </div>
-
     </div>
 </template>
 
@@ -363,6 +362,7 @@
 
     .show {
         height: 100px;
+        overflow-y: auto;
         width: 100%;
     }
 
