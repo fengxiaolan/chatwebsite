@@ -3,15 +3,24 @@
         <div class="content">
             <div class="contact">
                 <p style="color:red; text-align: center;">热线电话： 028-8888-8888</p>
-                <h2 class="speak">马上联系</h2>
+                <h2 class="speak" @click="contact">申请服务</h2>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import Alert from './Alert'
+
     export default {
-        name: "doorindex"
+        name: "doorindex",
+        methods: {
+            contact() {
+                Alert({
+                    content: "申请成功，请等待红娘与你联系"
+                })
+            }
+        }
     }
 </script>
 

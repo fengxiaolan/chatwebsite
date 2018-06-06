@@ -1,4 +1,4 @@
-/*引入*/
+/*引入mongoose*/
 var mongoose = require('mongoose')
 // 用于异步回调
 mongoose.Promise = require('bluebird') //同步检查允许您同步检索已履行承诺的履行价值或已被拒绝承诺的拒绝原因

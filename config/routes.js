@@ -6,6 +6,7 @@ const Message = require('../models/message')
 const superagent = require('superagent')
 const fs = require('fs')
 const multiparty = require('multiparty');
+const os = require('os');
 module.exports =  (app) => {
   app.use( (req, res, next) => {
     const _user = req.session.user
@@ -14,6 +15,19 @@ module.exports =  (app) => {
 
     next()
   })
+    //开发环境跨域测试
+    app.all('*',function (req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+        if (req.method == 'OPTIONS') {
+            res.sendStatus(200);
+        }
+        else {
+            next();
+        }
+    });
+
   app.post('/file/uploadimg',  (req, res, next) => {
     // //生成multiparty对象，并配置上传目标路径
     const form = new multiparty.Form()
@@ -112,6 +126,7 @@ module.exports =  (app) => {
       }
     })
   }),
+
   // 登录
   app.post('/user/signin', (req, res) => {
     const _user = req.body
@@ -160,6 +175,15 @@ module.exports =  (app) => {
       }
 
     })
+
+      // let ip
+      // for (let netWorkStr of os.networkInterfaces().en0) {
+      //     if (netWorkStr.family === 'IPv4') {
+      //         ip = netWorkStr.address
+      //     }
+      // }
+      //
+      // console.info('ip', ip)
   }),
 
   //注销当前用户
@@ -210,7 +234,7 @@ module.exports =  (app) => {
       var name= _user.name;
       var newname = _user.newname;
 
-      Friend.findOne({name: name, newname: newname}, function (err, friend) {
+      Friend.findOne({name: ''}, function (err, friend) {
           var newfriend = {
               name: name,
               newname: newname

@@ -6,7 +6,8 @@
                 <h2>{{val.title}}</h2>
                 <p>{{val.match}}</p>
                 <p>{{val.cont}}</p>
-                <div style="background: rebeccapurple;">围观幸福</div>
+                <br>
+                <div style="background: #ec7f7f; border-radius: 5px; text-align: center;">围观幸福</div>
             </div>
         </div>
     </div>
@@ -55,10 +56,11 @@
         background: white;
     }
     .storys{
-        width: 350px;
+        width: 32%;
         height: 150px;
         display: inline-block;
         margin-right: 10px;
+        border: 1px solid #ed3f14;
     }
 
     .simg {
@@ -69,5 +71,6 @@
     .right {
         float: left;
         width: 150px;
+        padding-left: 20px;
     }
 </style>

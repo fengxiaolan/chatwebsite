@@ -107,10 +107,10 @@
       if (!roomId) {
         this.$router.push({path: '/'})
       }
-      // if (!getItem('userid')) {
-      //   // 防止未登录
-      //   this.$router.push({path: '/login'})
-      // }
+      if (!getItem('userid')) {
+        // 防止未登录
+        this.$router.push({path: '/login'})
+      }
       this.useranme = getItem('userid')
     },
     mounted() {
@@ -127,7 +127,7 @@
       // 连接websocket地址
       this.getSocket.on('message', function (obj) {
         that.$store.commit('addRoomDetailInfos', obj)
-        window.scroll(0, 10000)
+        window.scroll(0, 20000)
       })
       this.getSocket.on('login', function (obj) {
         that.$store.commit('setUsers', obj)
@@ -141,7 +141,7 @@
         loading.hide()
         this.isLoadingAchieve = true
         this.$nextTick(() => {
-          this.container.scrollTop = 10000
+          this.container.scrollTop = 20000
         })
       }, 1000)
     },
@@ -255,7 +255,7 @@
     width: 100%
     height: 100%
     overflow: hidden
-    background: #ffffff
+    background: #fff
     -webkit-overflow-scrolling: touch
     .chat-inner 
       position: absolute

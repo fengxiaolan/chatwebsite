@@ -199,7 +199,8 @@ module.exports = function (app) {
           var _user = req.body;
           var name= _user.name;
           var newname = _user.newname;
-          Friend.find({name: name}, function (err, user) {
+
+          Friend.findOne({name: name, newname: newname}, function (err, friend) {
               var newfriend = {
                   name: name,
                   newname: newname
@@ -207,15 +208,15 @@ module.exports = function (app) {
               if (err) {
                   console.log(err)
               }
-              if(!user){
+              console.info('friend', friend)
+              if(friend){
                   res.json({
-                      errno: 2,
-                      data: '不存在该用户'
+                      errno: 1,
+                      data: '已是好友'
                   })
               } else {
-                  console.info('dj', user)
-                  var friend = new Friend(newfriend)
-                  friend.save(function (err, friend) {
+                  friend = new Friend(newfriend)
+                  friend.save((err, friend) => {
                       if (err) {
                           console.log(err)
                       }
@@ -225,13 +226,6 @@ module.exports = function (app) {
                       })
                   })
               }
-              /* if (user.length !== 0) {
-                  console.info('dj1', user)
-                  res.json({
-                      errno: 1,
-                      data: '已是好友'
-                  })
-              } */
           })
       }),
 
@@ -327,7 +321,7 @@ module.exports = function (app) {
               area = act.area,
               groupno = act.groupno,
               date = act.date;
-          Activity.find({name: name}, function (err, user) {
+          Activity.findOne({name: ''}, function (err, activity) {
               var newact = {
                   name: name,
                   province: province,
@@ -339,18 +333,24 @@ module.exports = function (app) {
               if (err) {
                   console.log(err)
               }
-              var activity = new Activity(newact)
-              activity.save(function (err, activity) {
-                  if (err) {
-                      console.log(err)
-                  }
+              console.info('activity', activity)
+              if(activity){
                   res.json({
-                      errno: 0,
-                      data: '添加活动成功'
+                      errno: 1,
+                      data: '已添加此活动'
                   })
-                  console.info('cc', activity)
-              })
-
+              } else {
+                  activity = new Activity(newact)
+                  activity.save(function (err, activity) {
+                      if (err) {
+                          console.log(err)
+                      }
+                      res.json({
+                          errno: 0,
+                          data: '添加活动成功'
+                      })
+                  })
+              }
           })
       }),
 
@@ -368,6 +368,83 @@ module.exports = function (app) {
 
                   res.json({
                       data: acts
+                  })
+              }
+          })
+      }),
+
+      //申请加入活动用户
+      app.post('/applyact', function (req, res) {
+          var act = req.body;
+          var name= act.name;
+          var username= act.username;
+          Actuser.findOne({name: ''}, function (err, actuser) {
+              var newact = {
+                  name: name,
+                  username: username
+              }
+              if (err) {
+                  console.log(err)
+              }
+              console.info('actuser', actuser)
+              if(actuser){
+                  res.json({
+                      errno: 1,
+                      data: '已申请加入'
+                  })
+              } else {
+                  actuser = new Actuser(newact)
+                  actuser.save(function (err, act) {
+                      if (err) {
+                          console.log(err)
+                      }
+                      res.json({
+                          errno: 0,
+                          data: '申请活动成功'
+                      })
+                  })
+              }
+          })
+      }),
+
+      //查看加入活动用户
+      app.post('/sapply', function (req, res) {
+          var acts = {
+              errno: 0,
+              data: {}
+          }
+          Actuser.find({}, function (err, data) {
+              if (err) {
+                  console.log(err);
+              } else {
+                  acts.data = data
+
+                  res.json({
+                      data: acts
+                  })
+              }
+          })
+      }),
+
+      //查看年龄相近的用户
+      app.post('/sage', function (req, res) {
+          var info = req.body;
+          var sex = info.sex;
+          var age = info.age;
+          var agel = age - 5;
+          var ageg = age + 5;
+          var ages = {
+              errno: 0,
+              data: {}
+          }
+          User.find({sex: sex, age: {$lte: ageg, $gte: agel}}, function (err, data) {
+              if (err) {
+                  console.log(err);
+              } else {
+                  ages.data = data
+
+                  res.json({
+                      data: ages
                   })
               }
           })
@@ -408,6 +485,7 @@ module.exports = function (app) {
               }
           })
       }),
+
       // 获取历史记录
       app.get('/history/message', (req, res) => {
           const id = req.query.roomid
@@ -453,6 +531,7 @@ module.exports = function (app) {
               })
           })
       }),
+
       // 机器人消息
       app.get('/robotapi', (req, res) => {
           const response = res

@@ -15,7 +15,7 @@
       <li><router-link to="/robot">智能对话</router-link></li>
       <li><router-link to="/activity">门店活动</router-link></li>
       <li><router-link to="/search">搜索</router-link></li>
-      <li><router-link to="/doorindex">直营门店</router-link></li>
+      <li @click="mendian" style="color: white; line-height: 30px; cursor: pointer;">直营门店</li>
       <li v-if="member"><router-link to="/member">会员信息</router-link></li>
     </ul>
 
@@ -55,6 +55,9 @@
                 clear()
                 this.$router.push('/login')
                 this.$store.commit('setTab', false)
+            },
+            mendian () {
+                window.open(window.location.origin + '/doorindex')
             }
         },
         computed: {

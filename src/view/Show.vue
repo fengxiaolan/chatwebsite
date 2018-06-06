@@ -216,7 +216,7 @@
         },
         created() {
             if (!this.getSocket) {
-                this.$store.commit('setGetSocket', io.connect('http://172.16.0.68:9090/'))
+                this.$store.commit('setGetSocket', io.connect('localhost:9090/'))
             }
         },
         methods: {
@@ -290,7 +290,7 @@
     }
    .containright {
        float: right;
-       width: 22%;
+       width: 20%;
        margin-left: 3px;
        padding-top: 25px;
    }

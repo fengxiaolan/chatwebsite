@@ -39,7 +39,7 @@
                 <mu-list-item v-for="(val, index) in searchsource" :key="index" title="">
                     <mu-avatar color="white" :src="val.src" backgroundColor="lightgreen" :size="32" @click="chatwindow(val.name)"></mu-avatar>&nbsp;&nbsp; {{val.name}}
                     &nbsp;&nbsp;{{val.age}}岁&nbsp;&nbsp; {{val.sex}}
-                    <mu-icon slot="right" value="info" @click="addfriend(val.name)"/>
+                    <div style="position: absolute; right: 20px; top: 25px; background: #0582cd; color: white;" @click="addfriend(val.name)">添加好友</div>
                 </mu-list-item>
             </mu-list>
         </div>
@@ -227,6 +227,9 @@
         position: absolute;
         left: 15px;
         top: 5px;
+    }
+    .mu-list {
+        border-bottom: 2px solid #2b85e4;
     }
 
 </style>

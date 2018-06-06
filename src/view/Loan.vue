@@ -46,7 +46,7 @@
     created() {
       if (!this.getSocket) {
         // if (process.env.NODE_ENV === 'development') {
-          this.$store.commit('setGetSocket', io.connect('http://172.16.0.68:9090/'))
+          this.$store.commit('setGetSocket', io.connect('localhost:9090/'))
         // } else {
         //   this.$store.commit('setGetSocket', io.connect('http://www.qiufengh.com:9090/'))
         // }

@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="head">
-        <img :src="src" alt="">
+        <img :src="src" :alt="username" :title="username">
       </div>
       <div class="name">
         {{username}}
@@ -12,23 +12,24 @@
       </div>
     </div>
     <div class="content">
-      <mu-grid-list class="gridlist-inline-demo">
+     <!-- <mu-grid-list class="gridlist-inline-demo">
         <mu-grid-tile v-for="(tile, index) in upimg" :key="index">
-          <img :src="tile.img"/>
+        <mu-grid-tile>
+          <img :src="src"/>
         </mu-grid-tile>
-      </mu-grid-list>
+      </mu-grid-list>-->
       <!---->
-      <h2 v-if="goodlist.length > 0">好友列表</h2>
+      <h2 v-if="this.friend" >好友列表项</h2>
       <mu-chip v-for="(val, index) in goodlist" :key="index">
         {{val.newname}}
       </mu-chip>
 
       <mu-list>
-        <mu-list-item title="上传图片" @click="imgupload">
+        <!--<mu-list-item title="上传图片" @click="imgupload">
           <mu-icon slot="left" value="inbox"/>
           <input id="inputFile" name='inputFile' type='file' multiple='mutiple' accept="image/*;capture=camera"
                  style="display: none" @change="fileup">
-        </mu-list-item>
+        </mu-list-item>-->
         <mu-list-item title="我的好友" @click="searchgood">
           <mu-icon slot="left" value="grade"/>
         </mu-list-item>
@@ -42,7 +43,7 @@
           <mu-icon slot="left" value="send"/>
         </mu-list-item>
         <mu-list-item title="修改信息" @click="ainfo">
-          <mu-icon slot="left" value="send"/>
+          <mu-icon slot="left" value="update"/>
         </mu-list-item>
       </mu-list>
     </div>
@@ -72,10 +73,11 @@
         rename: '',
         list: [],
         goodlist: [],
-        upimg: [],
+        upimg: '1524735336809',
         reinfo: false,
         uname: '',
-        pwd: ''
+        pwd: '',
+        friend: false
       }
     },
     mounted() {
@@ -120,6 +122,7 @@
             } else {
                 console.error("没有找到");
             }
+            this.friend = true
       },
       async deleteuser() {
         var name = getItem('userid')
@@ -158,12 +161,10 @@
                       room: that.roomid,
                       time: new Date()
                   }
-                  that.getSocket.emit('message', obj)
+               this.upimg = obj.time
+               console.info('kasdfja', obj.time.getTime())
               }
               fr.readAsDataURL(file1)
-              // this.$nextTick(() => {
-              //     this.container.scrollTop = 10000
-              // })
           } else {
               console.log('必须有文件')
           }
