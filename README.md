@@ -23,6 +23,8 @@ git push -u origin master
 （14）用户的签出与注销  
 ###工具使用
 window, node, mongodb 
+### 所用技术
+vue脚手架+mongodb+museui
 
 
 
